@@ -17,6 +17,30 @@
     </div>
     <div class="col-3 border">
       最新の投稿
+      <% @posts.each do |post| %>
+        <div class="card">
+          <div class="row">
+            <div class="col-4 px-0 text-right">
+              <%= image_tag post.get_post_image, height: "75px" %>
+            </div>
+            <div class="col-8 px-0">
+              <div class="card-body py-0">
+                <p class="card-title font-weight-bold text-truncate my-0">
+                  <%= link_to "#{post.title}", post_path(post) %>
+                </p>
+                <p class="card-text text-truncate my-0">
+                  <%= post.comment %>
+                </p>
+                <p class="card-text text-truncate text-right">
+                  <small class="text-muted">
+                    <%= post.prefecture.name %>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
   <div class="row">

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     root :to => "homes#top"
     resources :posts, only: [:new, :index, :show, :create]
     resources :prefectures, only: [:index, :show]
+    resources :regions, only: [:index]
   end
 
 end

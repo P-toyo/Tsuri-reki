@@ -1,27 +1,40 @@
 <%= render "layouts/sidebar_left" %>
 <div class="col-8 border px-5">
-  <h2 class="text-center my-4"><%= @post.title %></h2>
-  <table class="table table-borderless">
-    <tr>
-      <th class="text-center" style="width: 200px">投稿ユーザー</th>
-      <td><%= @post.user.name %>さん</td>
-    </tr>
-    <tr>
-      <th class="text-center">釣行日・時間帯</th>
-      <td><%= @post.date %> <%= @post.time_zone %></td>
-    </tr>
-    <tr>
-      <th class="text-center">釣り場</th>
-      <td><%= @post.prefecture.name %></td>
-    </tr>
-    <tr>
-      <th class="text-center">主な釣果</th>
-      <td><%= @post.species.name %> <%= @post.catch_number %>匹</td>
-    </tr>
-    <tr>
-      <th class="text-center">釣法</th>
-      <td><%= @post.fishing_method.name %></td>
-    </tr>
-  </table>
+  <h2 class="text-center my-4">投稿詳細</h2>
+  <div class="d-flex">
+    <div class="col-4">
+      <%= image_tag @post.get_post_image, height: "200" %>
+    </div>
+    <table class="col-8 table table-borderless">
+      <tr>
+        <th class="text-center" sytle="width: 200px">投稿タイトル</th>
+        <td><%= @post.title %></td>
+      </tr>
+      <tr>
+        <th class="text-center" style="width: 200px">投稿ユーザー</th>
+        <td><%= @post.user.name %>さん</td>
+      </tr>
+      <tr>
+        <th class="text-center">釣行日・時間帯</th>
+        <td><%= @post.date %> <%= @post.time_zone %></td>
+      </tr>
+      <tr>
+        <th class="text-center">釣り場</th>
+        <td><%= @post.prefecture.name %></td>
+      </tr>
+      <tr>
+        <th class="text-center">主な釣果</th>
+        <td><%= @post.species.name %> <%= @post.catch_number %>匹</td>
+      </tr>
+      <tr>
+        <th class="text-center">釣法</th>
+        <td><%= @post.fishing_method.name %></td>
+      </tr>
+      <tr>
+        <th class="text-center">コメント</th>
+        <td><%= @post.comment %></td>
+      </tr>
+    </table>
+  </div>
 </div>
 <%= render "layouts/sidebar_right" %>
