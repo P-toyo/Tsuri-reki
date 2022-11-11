@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+    <div class="col-9 border">
+      <div>地域別釣果一覧</div>
+      <table class="table table-borderless">
+        <% @regions.each do |region| %>
+          <tr>
+            <th><%= region.name %></th>
+            <% region.prefecture.each do |prefecture| %>
+              <td>
+                <u><%= link_to "#{prefecture.name}", prefecture_path(prefecture) %></u>
+              </td>
+            <% end %>
+          </tr>
+        <% end%>
+      </table>
+    </div>
+    <div class="col-3 border">
+      最新の投稿
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 border">
+      <div>新着アカウント</div>
+      <div class="card">
+        <div>
+          <p>アカウント名</p>
+          <p>活動拠点</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

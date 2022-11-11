@@ -1,7 +1,7 @@
 <div class="container my-4">
   <div class="row">
     <div class="col-4">
-      <h2>つりれき</h2>
+      <h2><%= link_to "つりれき", root_path %></h2>
     </div>
     <div class="col-8">
       <ul class="nav justify-content-end">
@@ -12,13 +12,13 @@
           <a class="nav-link" href="#">釣り場一覧</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">投稿一覧</a>
+          <%= link_to "投稿一覧", posts_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">ログイン</a>
+          <%= link_to "ログイン", new_user_session_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-primary rounded-pill" href="#">新規会員登録</a>
+          <%= link_to "新規会員登録", new_user_registration_path, class: "nav-link btn btn-primary rounded-pill" %>
         </li>
       </ul>
     </div>

@@ -1,0 +1,44 @@
+<%= render "layouts/sidebar_left" %>
+<div class="col-8 border px-5">
+  <%= form_with model: @post do |f| %>
+    <h2 class="text-center my-4">新規投稿</h2>
+    <table class="table table-borderless">
+      <tr>
+        <th class="text-center" style="width: 200px">釣行日・時間帯</th>
+        <td><%= f.date_field :date, class: "w-100"  %></td>
+        <td><%= f.collection_select :time_zone, TimeZone.all, :id, :time_zone, include_blank: "選択して下さい" %></td>
+      </tr>
+      <tr>
+        <th class="text-center" style="width: 200px">釣行場所</th>
+        <td><%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_blank: "選択して下さい" %></td>
+      </tr>
+      <tr>
+        <th class="text-center">メインの釣果</th>
+        <td><%= f.collection_select :species_id, Species.all, :id, :name, include_blank: "選択して下さい" %></td>
+        <td><%= f.number_field :catch_number, class: "w-25" %>匹</td>
+      </tr>
+      <tr>
+        <th class="text-center">その他釣果</th>
+        <td><%= f.text_field :catch_other, class: "w-100" %></td>
+      </tr>
+      <tr>
+        <th class="text-center">釣法</th>
+        <td><%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name, include_blank: "選択して下さい" %></td>
+      </tr>
+      <tr>
+        <th class="text-center">タイトル</th>
+        <td><%= f.text_field :title, class: "w-100" %></td>
+      </tr>
+      <tr>
+        <th class="text-center">画像</th>
+        <td><%= f.file_field :image, class: "w-100" %></td>
+      </tr>
+      <tr>
+        <th class="text-center">コメント</th>
+        <td><%= f.text_area :comment, class: "w-100" %></td>
+      </tr>
+    </table>
+    <div class="text-center my-4"><%= f.submit "投稿", class: "btn btn-success w-50" %></div>
+  <% end %>
+</div>
+<%= render "layouts/sidebar_right" %>

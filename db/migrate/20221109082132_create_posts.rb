@@ -4,13 +4,13 @@ class CreatePosts < ActiveRecord::Migration[6.1]
 
       t.integer :species_id
       t.integer :user_id
-      t.integer :place_id
-      t.integer :method_id
+      t.integer :prefecture_id
+      t.integer :fishing_method_id
       t.date    :date
       t.string  :time_zone
       t.integer :catch_number
       t.string  :catch_other
-      t.string  :method_note
+      t.string  :comment
       t.string  :title
 
       t.timestamps
