@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users,skip: [:passwords], controllers: {
+  devise_for :users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
   }
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
     resources :prefectures, only: [:index, :show]
     resources :regions, only: [:index]
+    resources :users, only: [:show]
   end
 
 end
