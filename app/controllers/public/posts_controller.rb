@@ -23,7 +23,7 @@ class Public::PostsController < ApplicationController
     private
 
     def post_params
-      params.require(:post).permit(:species_id, :user_id, :prefecture_id, :fishing_method_id, :date, :time_zone, :catch_number, :catch_other, :comment, :title)
+      params.require(:post).permit(:species_id, :user_id, :prefecture_id, :fishing_method_id, :date, :time_zone, :catch_number, :catch_other, :comment, :title, :image)
     end
 
 end

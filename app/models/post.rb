@@ -12,7 +12,11 @@ class Post < ApplicationRecord
   end
 
   def get_post_image
-    (image.attached?) ? image : 'noimage.png'
+    if image.attached?
+      image[0]
+    else
+      "noimage.png"
+    end
   end
 
 end

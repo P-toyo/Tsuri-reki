@@ -1,20 +1,20 @@
-<div class="d-flex mx-auto justify-content-center">
   <% posts.each do |post| %>
-    <div class="mx-2">
+  <div class="col-4 pb-4 text-center">
+    <div>
       <a class="text-dark" title="<%= post.title %>">
         <div class="card">
-          <%= image_tag post.get_post_image, height: "180px" %></br>
+          <%= image_tag post.get_post_image, class: "pt-3", height: "200px" %></br>
           <%= post.prefecture.name %>
-          <div class="card-body" style="width: 180px">
-            <p class="card-title font-weight-bold">
+          <div class="card-body mx-auto" style="width: 180px">
+            <p class="card-title font-weight-bold text-center">
               <%= link_to "#{post.title}", post_path(post) %>
             </p>
-            <p class="card-text">
+            <p class="card-text text-center">
               <%= post.comment %>
             </p>
           </div>
         </div>
       </a>
     </div>
+    </div>
   <% end %>
-</div>
