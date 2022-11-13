@@ -21,7 +21,7 @@
       </tr>
       <tr>
         <th class="text-center">主な活動拠点</th>
-        <td><%= f.collection_select :area, Prefecture.all, :name, :name, include_blank: "選択して下さい" %></td>
+        <td><%= f.collection_select :prefecture_id, Prefecture.all, :name, :id, include_blank: "選択して下さい" %></td>
       </tr>
     </table>
     <div class="text-center my-4"><%= f.submit "新規登録", class: "btn btn-success w-50" %></div>

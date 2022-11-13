@@ -1,0 +1,34 @@
+<h2 class="text-center my-4">投稿詳細</h2>
+<div class="d-flex">
+  <div class="col-4">
+    <%= image_tag user.get_image, height: "200" %>
+  </div>
+  <table class="col-8 table table-borderless">
+    <tr>
+      <th class="text-center" sytle="width: 200px">ユーザー名</th>
+      <td><%= user.name %></td>
+    </tr>
+    <tr>
+      <th class="text-center">拠点</th>
+      <td><%= user.area %></td>
+    </tr>
+    <tr>
+      <th class="text-center" style="width: 200px">投稿数</th>
+      <td><%= user.posts.count %>件</td>
+    </tr>
+    <tr>
+      <th class="text-center">釣果数</th>
+      <td><%= user.posts.sum(:catch_number) %>匹</td>
+    </tr>
+  </table>
+</div>
+<div class="col-6 text-center border">
+  <div>ブックマーク一覧</div>
+  <% if current_user.bookmarks.present? %>
+    <% current_user.bookmarks.each do |bookmark| %>
+      <%= link_to "#{bookmark.post.title}", post_path(bookmark.post) %>
+    <% end %>
+  <% else %>
+    ブックマークがありません
+  <% end %>
+</div>
