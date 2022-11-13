@@ -10,7 +10,10 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root :to => "homes#top"
-    resources :posts, only: [:new, :index, :show, :create]
+    resources :posts, only: [:new, :index, :show, :create] do
+      resources :comments, only: [:create]
+      resources :bookmarks, only: [:create, :destroy]
+    end
     resources :prefectures, only: [:index, :show]
     resources :regions, only: [:index]
   end

@@ -75,3 +75,5 @@ TimeZone.create(time_zone: "昼過ぎ")
 TimeZone.create(time_zone: "夕方")
 TimeZone.create(time_zone: "夜")
 TimeZone.create(time_zone: "深夜")
+
+Admin.create!(email: 'tsurireki@admin', password: 'tsurireki')

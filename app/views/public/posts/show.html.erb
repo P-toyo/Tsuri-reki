@@ -1,6 +1,13 @@
 <%= render "layouts/sidebar_left" %>
 <div class="col-8 border px-5">
   <h2 class="text-center my-4">投稿詳細</h2>
+  <h5 class="text-right my-2">
+    <% if @post.bookmarked_by?(current_user) %>
+      <%= link_to "ブックマークを外す", post_bookmark_path(@post), class: "btn btn-danger", method: :delete %>
+    <% else %>
+      <%= link_to "ブックマークする", post_bookmarks_path(@post), class: "btn btn-primary", method: :post %>
+    <% end %>
+  </h5>
   <div class="d-flex">
     <div class="col-4">
       <%= image_tag @post.get_post_image, height: "200" %>
@@ -31,10 +38,23 @@
         <td><%= @post.fishing_method.name %></td>
       </tr>
       <tr>
-        <th class="text-center">コメント</th>
+        <th class="text-center">投稿者のコメント</th>
         <td><%= @post.comment %></td>
       </tr>
     </table>
+  </div>
+  <div>
+    <p class="text-center">コメント件数：<%= @post.comments.count %></p>
+    <% @post.comments.each do |comment| %>
+      <div><%= comment.user.name %></div>
+      <div><%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form_with model: [@post, @comment] do |f| %>
+      <%= f.text_area :comment, rows: "5", placeholder: "コメントを入力" %>
+      <%= f.submit "送信", class: "btn btn-success" %>
+    <% end %>
   </div>
 </div>
 <%= render "layouts/sidebar_right" %>
