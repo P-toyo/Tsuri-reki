@@ -1,7 +1,7 @@
 <div class="d-flex mx-auto justify-content-center">
   <% posts.each do |post| %>
     <div class="mx-2">
-      <a class="text-decoration-none text-dark" title="<%= post.title %>">
+      <a class="text-dark" title="<%= post.title %>">
         <div class="card">
           <%= image_tag post.get_post_image, height: "180px" %></br>
           <%= post.prefecture.name %>
@@ -17,7 +17,4 @@
       </a>
     </div>
   <% end %>
-    <div class="item_box_space"></div>
-    <div class="item_box_space"></div>
-    <div class="item_box_space"></div>
 </div>
