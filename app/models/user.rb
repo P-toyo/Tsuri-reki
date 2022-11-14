@@ -1,7 +1,11 @@
 class User < ApplicationRecord
-  has_many :posts
-  has_many :bookmarks
-  has_many :comments, dependent: :destroy
+  has_many   :posts
+  has_many   :bookmarks
+  has_many   :comments, dependent: :destroy
+  has_many   :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many   :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many   :followings, through: :relationships, source: :followed
+  has_many   :followers, through: :reverse_of_relationships, source: :follower
   belongs_to :prefecture
   has_many_attached :image
   # Include default devise modules. Others available are:
@@ -15,6 +19,18 @@ class User < ApplicationRecord
     else
       "noimage.png"
     end
+  end
+
+  def follow(user_id)
+    relationships.create(followed_id: user_id)
+  end
+
+  def unfollow(user_id)
+    relationships.find_by(followed_id: user_id).destroy
+  end
+
+  def following?(user)
+    followings.include?(user)
   end
 
 end
