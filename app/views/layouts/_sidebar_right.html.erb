@@ -1,26 +1,28 @@
 <div class="col-2 border p-0">
-  <div class="card text-center m-0">
-    <%= image_tag current_user.get_image %></br>
-    <%= current_user.name %>さん
-    <div class="card-body mx-auto">
-      <p class="card-text text-center">
-        <%= link_to "マイページ", user_path(current_user.id) %>
-      </p>
-      <p class="card-text text-center">
-        投稿数 <%= current_user.posts.count %>件
-      </p>
-      <p class="card-text text-center">
-        釣果数 <%= current_user.posts.sum(:catch_number) %>匹
-      </p>
-      <p class="card-text text-center">
-        フォロー <%= current_user.followings.count %>人
-      </p>
-      <p class="card-text text-center">
-        フォロワー <%= current_user.followers.count %>人
-      </p>
-      <p class="card-text text-center">
-        ブックマーク <%= current_user.bookmarks.count %>件
-      </p>
+  <% if user_signed_in? %>
+    <div class="card text-center m-0">
+      <%= image_tag current_user.get_image %></br>
+      <%= current_user.name %>さん
+      <div class="card-body mx-auto">
+        <p class="card-text text-center">
+          <%= link_to "マイページ", user_path(current_user.id) %>
+        </p>
+        <p class="card-text text-center">
+          投稿数 <%= current_user.posts.count %>件
+        </p>
+        <p class="card-text text-center">
+          釣果数 <%= current_user.posts.sum(:catch_number) %>匹
+        </p>
+        <p class="card-text text-center">
+          フォロー <%= current_user.followings.count %>人
+        </p>
+        <p class="card-text text-center">
+          フォロワー <%= current_user.followers.count %>人
+        </p>
+        <p class="card-text text-center">
+          ブックマーク <%= current_user.bookmarks.count %>件
+        </p>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

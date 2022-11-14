@@ -10,7 +10,7 @@
     </tr>
     <tr>
       <th class="text-center">拠点</th>
-      <td><%= user.area %></td>
+      <td><%= user.prefecture.name %></td>
     </tr>
     <tr>
       <th class="text-center" style="width: 200px">投稿数</th>
@@ -24,7 +24,7 @@
 </div>
 <div class="row">
   <div class="col-6 text-center border">
-    <div>ブックマーク一覧</div>
+    <div class="my-2">ブックマーク一覧</div>
     <% if current_user.bookmarks.present? %>
       <% current_user.bookmarks.each do |bookmark| %>
         <%= link_to "#{bookmark.post.title}", post_path(bookmark.post) %>
@@ -35,11 +35,15 @@
   </div>
   <div class="col-6 mx-auto border">
     <ul class="nav nav-tabs">
-      <li class="nav-item"><a href="#tab-a" data-toggle="tab" class="nav-link active">フォロー中</a></li>
-      <li class="nav-item"><a href="#tab-b" data-toggle="tab" class="nav-link">フォロワー</a></li>
+      <li class="nav-item">
+        <a href="#tab-a" data-toggle="tab" class="nav-link active">フォロー中</a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab-b" data-toggle="tab" class="nav-link">フォロワー</a>
+      </li>
     </ul>
     <div  class="tab-content">
-      <div id="tab-a" class="tab-pane active">
+      <div id="tab-a" class="tab-pane active text-center">
         <% if current_user.followings.exists? %>
           <% current_user.followings.each do |following| %>
             <p class="text-cener"><%= following.name %></p>
@@ -48,7 +52,7 @@
           <p class="text-center">ユーザーはいません</p>
         <% end %>
       </div>
-      <div id="tab-b" class="tab-pane">
+      <div id="tab-b" class="tab-pane text-center">
         <% if current_user.followers.exists? %>
           <% current_user.followers.each do |follower| %>
             <p class="text-cener"><%= follower.name %></p>

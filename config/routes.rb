@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+
   namespace :public do
     get 'relationships/followings'
     get 'relationships/followers'
   end
+
   devise_for :users, skip: [:passwords], controllers: {
     registrations: "public/registrations",
     sessions: 'public/sessions'
@@ -14,11 +16,13 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root :to => "homes#top"
-    resources :posts, only: [:new, :index, :show, :create] do
+    get "posts/select_prefecture"
+    get "posts/new/:id" => "posts#new", as: "post_new"
+    resources :posts, only: [:index, :show, :create] do
       resources :comments, only: [:create]
       resources :bookmarks, only: [:create, :destroy]
     end
-    resources :prefectures, only: [:index, :show]
+    resources :prefectures, only: [:show]
     resources :regions, only: [:index]
     resources :users, only: [:show] do
       resource :relationships, only: [:create, :destroy]

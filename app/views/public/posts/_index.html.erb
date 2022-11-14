@@ -1,20 +1,28 @@
-  <% posts.each do |post| %>
+<div class="col-12 mb-3">
+  <%= form_tag posts_path, method: :get, class: 'boards__searchForm' do %>
+    <%= select_tag :prefecture_id, options_from_collection_for_select(Prefecture.all, :id, :name, params[:prefecture_id]),
+      {
+        prompt: 'タグで絞り込み検索',
+        onchange: 'submit(this.form);'
+      }
+    %>
+  <% end %>
+</div>
+<% posts.each do |post| %>
   <div class="col-4 pb-4 text-center">
     <div>
-      <a class="text-dark" title="<%= post.title %>">
-        <div class="card">
-          <%= image_tag post.get_post_image, class: "pt-3", height: "200px" %></br>
-          <%= post.prefecture.name %>
-          <div class="card-body mx-auto" style="width: 180px">
-            <p class="card-title font-weight-bold text-center">
-              <%= link_to "#{post.title}", post_path(post) %>
-            </p>
-            <p class="card-text text-center">
-              <%= post.comment %>
-            </p>
-          </div>
+      <div class="card text-center m-0">
+        <%= image_tag post.get_post_image %></br>
+        <%= post.area.prefecture.name %>
+        <div class="card-body mx-auto">
+          <p class="card-title font-weight-bold text-center">
+            <%= link_to "#{post.title}", post_path(post) %>
+          </p>
+          <p class="card-text text-center">
+            <%= post.comment %>
+          </p>
         </div>
-      </a>
+      </div>
     </div>
-    </div>
-  <% end %>
+  </div>
+<% end %>

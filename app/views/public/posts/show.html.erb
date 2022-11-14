@@ -34,11 +34,11 @@
       </tr>
       <tr>
         <th class="text-center">釣行日・時間帯</th>
-        <td><%= @post.date %> <%= @post.time_zone %></td>
+        <td><%= @post.date %> <%= @post.time_zone.time_zone %></td>
       </tr>
       <tr>
         <th class="text-center">釣り場</th>
-        <td><%= @post.prefecture.name %></td>
+        <td><%= @post.area.name %></td>
       </tr>
       <tr>
         <th class="text-center">主な釣果</th>

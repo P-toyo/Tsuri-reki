@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_13_152803) do
+ActiveRecord::Schema.define(version: 2022_11_14_133333) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 2022_11_13_152803) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "post_tags", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "prefecture_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["prefecture_id"], name: "index_post_tags_on_prefecture_id"
+  end
+
   create_table "posted_images", force: :cascade do |t|
     t.integer "post_id"
     t.datetime "created_at", precision: 6, null: false
@@ -89,16 +98,17 @@ ActiveRecord::Schema.define(version: 2022_11_13_152803) do
   create_table "posts", force: :cascade do |t|
     t.integer "species_id"
     t.integer "user_id"
-    t.integer "prefecture_id"
+    t.integer "area_id"
     t.integer "fishing_method_id"
     t.date "date"
-    t.string "time_zone"
+    t.string "time_zone_id"
     t.integer "catch_number"
     t.string "catch_other"
     t.string "comment"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "prefecture_id"
   end
 
   create_table "prefectures", force: :cascade do |t|
@@ -146,8 +156,8 @@ ActiveRecord::Schema.define(version: 2022_11_13_152803) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "prefecture_id"
     t.string "name"
-    t.string "area"
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -157,4 +167,6 @@ ActiveRecord::Schema.define(version: 2022_11_13_152803) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "post_tags", "posts"
+  add_foreign_key "post_tags", "prefectures"
 end
