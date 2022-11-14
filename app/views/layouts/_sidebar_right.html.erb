@@ -13,13 +13,13 @@
         釣果数 <%= current_user.posts.sum(:catch_number) %>匹
       </p>
       <p class="card-text text-center">
-        フォロー 人
+        フォロー <%= current_user.followings.count %>人
       </p>
       <p class="card-text text-center">
-        フォロワー 人
+        フォロワー <%= current_user.followers.count %>人
       </p>
       <p class="card-text text-center">
-        ブックマーク <%= link_to "#{current_user.bookmarks.count}", post_bookmarks_path(current_user) %>件
+        ブックマーク <%= current_user.bookmarks.count %>件
       </p>
     </div>
   </div>

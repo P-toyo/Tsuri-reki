@@ -22,13 +22,41 @@
     </tr>
   </table>
 </div>
-<div class="col-6 text-center border">
-  <div>ブックマーク一覧</div>
-  <% if current_user.bookmarks.present? %>
-    <% current_user.bookmarks.each do |bookmark| %>
-      <%= link_to "#{bookmark.post.title}", post_path(bookmark.post) %>
+<div class="row">
+  <div class="col-6 text-center border">
+    <div>ブックマーク一覧</div>
+    <% if current_user.bookmarks.present? %>
+      <% current_user.bookmarks.each do |bookmark| %>
+        <%= link_to "#{bookmark.post.title}", post_path(bookmark.post) %>
+      <% end %>
+    <% else %>
+      ブックマークがありません
     <% end %>
-  <% else %>
-    ブックマークがありません
-  <% end %>
+  </div>
+  <div class="col-6 mx-auto border">
+    <ul class="nav nav-tabs">
+      <li class="nav-item"><a href="#tab-a" data-toggle="tab" class="nav-link active">フォロー中</a></li>
+      <li class="nav-item"><a href="#tab-b" data-toggle="tab" class="nav-link">フォロワー</a></li>
+    </ul>
+    <div  class="tab-content">
+      <div id="tab-a" class="tab-pane active">
+        <% if current_user.followings.exists? %>
+          <% current_user.followings.each do |following| %>
+            <p class="text-cener"><%= following.name %></p>
+          <% end %>
+        <% else %>
+          <p class="text-center">ユーザーはいません</p>
+        <% end %>
+      </div>
+      <div id="tab-b" class="tab-pane">
+        <% if current_user.followers.exists? %>
+          <% current_user.followers.each do |follower| %>
+            <p class="text-cener"><%= follower.name %></p>
+          <% end %>
+        <% else %>
+          <p class="text-center">ユーザーはいません</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

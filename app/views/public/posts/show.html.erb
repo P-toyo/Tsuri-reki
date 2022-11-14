@@ -3,9 +3,9 @@
   <h2 class="text-center my-4">投稿詳細</h2>
   <h5 class="text-right my-2">
     <% if @post.bookmarked_by?(current_user) %>
-      <%= link_to "ブックマークを外す", post_bookmark_path(@post), class: "btn btn-danger", method: :delete %>
+      <%= link_to "ブックマークを外す", post_bookmark_path(@post), class: "btn btn-danger btn-sm", method: :delete %>
     <% else %>
-      <%= link_to "ブックマークする", post_bookmarks_path(@post), class: "btn btn-primary", method: :post %>
+      <%= link_to "ブックマークする", post_bookmarks_path(@post), class: "btn btn-primary btn-sm", method: :post %>
     <% end %>
   </h5>
   <div class="d-flex">
@@ -19,7 +19,18 @@
       </tr>
       <tr>
         <th class="text-center" style="width: 200px">投稿ユーザー</th>
-        <td><%= @post.user.name %>さん</td>
+        <td>
+          <div><%= @post.user.name %>さん</div>
+          <div class="text-right">
+            <% if current_user.id != @post.user.id %>
+              <% if current_user.following?(@post.user) %>
+                <%= link_to "フォロー外す", user_relationships_path(@post.user.id), class: "btn btn-danger btn-sm", method: :delete %>
+              <% else %>
+                <%= link_to "フォローする", user_relationships_path(@post.user.id), class: "btn btn-primary btn-sm", method: :post %>
+              <% end %>
+            <% end %>
+          </div>
+        </td>
       </tr>
       <tr>
         <th class="text-center">釣行日・時間帯</th>
