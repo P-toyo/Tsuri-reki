@@ -1,11 +1,15 @@
 <div class="col-12 mb-3">
-  <%= form_tag posts_path, method: :get, class: 'boards__searchForm' do %>
+  <%= form_tag posts_path, method: :get, class: 'boards__searchForm my-auto' do %>
     <%= select_tag :prefecture_id, options_from_collection_for_select(Prefecture.all, :id, :name, params[:prefecture_id]),
       {
-        prompt: 'タグで絞り込み検索',
+        prompt: '都道府県で絞り込み',
         onchange: 'submit(this.form);'
       }
     %>
+  <% end %>
+  <%= form_tag posts_path, class: "d-flex mt-2", method: :get do %>
+    <div><%= text_field_tag :search, placeholder="タイトルで検索" %></div>
+    <div><%= submit_tag "Search", :title => nil, class: "btn btn-primary btn-sm my-auto" %></div>
   <% end %>
 </div>
 <% posts.each do |post| %>

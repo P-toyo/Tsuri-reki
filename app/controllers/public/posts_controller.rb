@@ -23,6 +23,7 @@ class Public::PostsController < ApplicationController
 
   def index
     @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts : Post.all
+    @posts = @posts.search(params[:search])
   end
 
 
