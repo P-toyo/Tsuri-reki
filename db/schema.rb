@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_14_133333) do
+ActiveRecord::Schema.define(version: 2022_11_15_023935) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2022_11_14_133333) do
     t.integer "area_id"
     t.integer "fishing_method_id"
     t.date "date"
-    t.string "time_zone_id"
+    t.integer "time_zone_id"
     t.integer "catch_number"
     t.string "catch_other"
     t.string "comment"

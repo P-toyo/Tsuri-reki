@@ -6,7 +6,7 @@
       <tr>
         <th class="text-center" style="width: 200px">釣行日・時間帯</th>
         <td><%= f.date_field :date, class: "w-100"  %></td>
-        <td><%= f.collection_select :time_zone, TimeZone.all, :id, :time_zone, include_blank: "選択して下さい" %></td>
+        <td><%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone, include_blank: "選択して下さい" %></td>
       </tr>
       <tr>
         <th class="text-center" style="width: 200px">釣行場所</th>
