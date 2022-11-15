@@ -2,8 +2,8 @@ class Post < ApplicationRecord
   belongs_to :user
   belongs_to :area
   belongs_to :species
-  belongs_to :time_zone
   belongs_to :fishing_method
+  belongs_to :time_zone
   has_many   :post_tags, dependent: :destroy
   has_many   :prefectures, through: :post_tags
   has_many   :comments, dependent: :destroy
