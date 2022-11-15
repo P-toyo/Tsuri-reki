@@ -13,20 +13,22 @@
   <% end %>
 </div>
 <% posts.each do |post| %>
-  <div class="col-4 pb-4 text-center">
-    <div>
-      <div class="card text-center m-0">
-        <%= image_tag post.get_post_image %></br>
-        <%= post.area.prefecture.name %>
-        <div class="card-body mx-auto">
-          <p class="card-title font-weight-bold text-center">
-            <%= link_to "#{post.title}", post_path(post) %>
-          </p>
-          <p class="card-text text-center">
-            <%= post.comment %>
-          </p>
+  <% if post.status %>
+    <div class="col-4 pb-4 text-center">
+      <div>
+        <div class="card text-center m-0">
+          <%= image_tag post.get_post_image %></br>
+          <%= post.area.prefecture.name %>
+          <div class="card-body mx-auto">
+            <p class="card-title font-weight-bold text-center">
+              <%= link_to "#{post.title}", post_path(post) %>
+            </p>
+            <p class="card-text text-center">
+              <%= post.comment %>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>
