@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     root :to => "homes#top"
     get "posts/select_prefecture"
     get "posts/new/:id" => "posts#new", as: "post_new"
-    resources :posts, only: [:index, :show, :create] do
+    resources :posts, only: [:index, :show, :create, :update] do
       resources :comments, only: [:create]
       resources :bookmarks, only: [:create, :destroy]
     end

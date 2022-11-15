@@ -23,6 +23,24 @@
   </table>
 </div>
 <div class="row">
+  <div class="col-12 text-center border">
+    <div class="my-2">投稿一覧</div>
+    <% if current_user.posts.present? %>
+      <% current_user.posts.each do |post| %>
+        <%= form_with model: post do |f| %>
+          <div class="d-flex my-3 justify-content-center align-items-center">
+            <div><%= link_to "#{post.title}", post_path(post.id), class: "mx-3" %></div>
+            <div><%= f.select :status, [["公開","true"], ["非公開","false"]] %></div>
+            <div><%= f.submit "変更", class: "btn btn-success btn-sm my-auto" %></div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      投稿はありません
+    <% end %>
+  </div>
+</div>
+<div class="row">
   <div class="col-6 text-center border">
     <div class="my-2">ブックマーク一覧</div>
     <% if current_user.bookmarks.present? %>

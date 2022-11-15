@@ -28,13 +28,19 @@ class Public::PostsController < ApplicationController
   def index
     @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts : Post.all
     @posts = @posts.search(params[:search])
+    @posts = @posts.order(created_at: :desc)
   end
 
+  def update
+    post = Post.find(params[:id])
+    post.update(post_params)
+    redirect_to request.referer
+  end
 
     private
 
     def post_params
-      params.require(:post).permit(:species_id, :user_id, :area_id, :fishing_method_id, :date, :time_zone_id, :catch_number, :catch_other, :comment, :title, :image)
+      params.require(:post).permit(:species_id, :user_id, :area_id, :fishing_method_id, :prefecture_id, :date, :time_zone_id, :catch_number, :catch_other, :comment, :title, :image, :status)
     end
 
 end
