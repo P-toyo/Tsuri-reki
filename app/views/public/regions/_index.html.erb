@@ -1,10 +1,19 @@
 <div class="col-8">
-  <% regions.each do |region| %>
-    <div>
-      <%= region.name %>
-      <% region.prefecture.each do |prefecture| %>
-        <%= prefecture.name %>
-      <% end %>
-    </div>
-  <% end %>
+  <div>
+    <% @regions.each do |region| %>
+      <h5 class="text-center border-bottom"><%= region.name %></h5>
+      <table class="table table-borderless">
+        <% region.prefecture.each do |prefecture| %>
+          <tr>
+            <td style="width: 100px"><%= prefecture.name %></td>
+            <td class="d-inline-lex">|
+              <% prefecture.area.each do |area| %>
+                <u><%= link_to "#{area.name}", area_path(area.id) %></u> |
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    <% end%>
+  </div>
 </div>
