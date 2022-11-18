@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-9 border">
-      <div>地域別釣果一覧</div>
+      <div>地域別投稿一覧</div>
       <table class="table table-borderless">
         <% @regions.each do |region| %>
           <tr>
             <th><%= region.name %></th>
             <% region.prefecture.each do |prefecture| %>
               <td>
-                <u><%= link_to "#{prefecture.name}", prefecture_path(prefecture) %></u>
+                <u><%= link_to "#{prefecture.name}", posts_path(prefecture, prefecture_id: prefecture.id) %></u>
               </td>
             <% end %>
           </tr>
