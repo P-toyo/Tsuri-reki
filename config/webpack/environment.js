@@ -11,5 +11,3 @@ environment.plugins.prepend(
     Popper: 'popper.js'
   })
 )
-
-const webpack = require('webpack')
