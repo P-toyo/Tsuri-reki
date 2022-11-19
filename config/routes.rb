@@ -1,3 +1,35 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  namespace :public do
+    get 'relationships/followings'
+    get 'relationships/followers'
+  end
+
+  devise_for :users, skip: [:passwords], controllers: {
+    registrations: "public/registrations",
+    sessions: 'public/sessions'
+  }
+
+  devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
+    sessions: "admin/sessions"
+  }
+
+  scope module: :public do
+    root :to => "homes#top"
+    get "posts/select_prefecture"
+    get "posts/new/:id" => "posts#new", as: "post_new"
+    resources :posts, only: [:index, :show, :create, :update] do
+      resources :comments, only: [:create]
+      resources :bookmarks, only: [:create, :destroy]
+    end
+    resources :areas, only: [:show]
+    resources :prefectures, only: [:show]
+    resources :regions, only: [:index]
+    resources :users, only: [:show] do
+      resource :relationships, only: [:create, :destroy]
+      get 'followings' => 'relationships#followings', as: 'followings'
+      get 'followers' => 'relationships#followers', as: 'followers'
+    end
+  end
+
 end

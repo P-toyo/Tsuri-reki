@@ -1,0 +1,84 @@
+<h2 class="text-center my-4">投稿詳細</h2>
+<div class="d-flex">
+  <div class="col-4">
+    <%= image_tag user.get_image, height: "200" %>
+  </div>
+  <table class="col-8 table table-borderless">
+    <tr>
+      <th class="text-center" sytle="width: 200px">ユーザー名</th>
+      <td><%= user.name %></td>
+    </tr>
+    <tr>
+      <th class="text-center">拠点</th>
+      <td><%= user.prefecture.name %></td>
+    </tr>
+    <tr>
+      <th class="text-center" style="width: 200px">投稿数</th>
+      <td><%= user.posts.count %>件</td>
+    </tr>
+    <tr>
+      <th class="text-center">釣果数</th>
+      <td><%= user.posts.sum(:catch_number) %>匹</td>
+    </tr>
+  </table>
+</div>
+<div class="row">
+  <div class="col-12 text-center border">
+    <div class="my-2">投稿一覧</div>
+    <% if current_user.posts.present? %>
+      <% current_user.posts.each do |post| %>
+        <%= form_with model: post do |f| %>
+          <div class="d-flex my-3 justify-content-center align-items-center">
+            <div><%= link_to "#{post.title}", post_path(post.id), class: "mx-3" %></div>
+            <div><%= f.select :status, [["公開","true"], ["非公開","false"]] %></div>
+            <div><%= f.submit "変更", class: "btn btn-success btn-sm my-auto" %></div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      投稿はありません
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 text-center border">
+    <div class="my-2">ブックマーク一覧</div>
+    <% if current_user.bookmarks.present? %>
+      <% current_user.bookmarks.each do |bookmark| %>
+        <%= link_to "#{bookmark.post.title}", post_path(bookmark.post) %>
+      <% end %>
+    <% else %>
+      ブックマークがありません
+    <% end %>
+  </div>
+  <div class="col-6 mx-auto border">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a href="#tab-a" data-toggle="tab" class="nav-link active">フォロー中</a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab-b" data-toggle="tab" class="nav-link">フォロワー</a>
+      </li>
+    </ul>
+    <div  class="tab-content">
+      <div id="tab-a" class="tab-pane active text-center">
+        <% if current_user.followings.exists? %>
+          <% current_user.followings.each do |following| %>
+            <p class="text-cener"><%= following.name %></p>
+          <% end %>
+        <% else %>
+          <p class="text-center">ユーザーはいません</p>
+        <% end %>
+      </div>
+      <div id="tab-b" class="tab-pane text-center">
+        <% if current_user.followers.exists? %>
+          <% current_user.followers.each do |follower| %>
+            <p class="text-cener"><%= follower.name %></p>
+          <% end %>
+        <% else %>
+          <p class="text-center">ユーザーはいません</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

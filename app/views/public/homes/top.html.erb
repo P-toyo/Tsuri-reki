@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+    <div class="col-9 border">
+      <div>地域別投稿一覧</div>
+      <table class="table table-borderless">
+        <% @regions.each do |region| %>
+          <tr>
+            <th><%= region.name %></th>
+            <% region.prefecture.each do |prefecture| %>
+              <td>
+                <u><%= link_to "#{prefecture.name}", posts_path(prefecture, prefecture_id: prefecture.id) %></u>
+              </td>
+            <% end %>
+          </tr>
+        <% end%>
+      </table>
+    </div>
+    <div class="col-3 border">
+      最新の投稿
+      <% @posts.each do |post| %>
+        <div class="card">
+          <div class="row">
+            <div class="col-4 px-0 text-right">
+              <%= image_tag post.get_post_image, height: "75px" %>
+            </div>
+            <div class="col-8 px-0">
+              <div class="card-body py-0">
+                <p class="card-title font-weight-bold text-truncate my-0">
+                  <%= link_to "#{post.title}", post_path(post) %>
+                </p>
+                <p class="card-text text-truncate my-0">
+                  <%= post.comment %>
+                </p>
+                <p class="card-text text-truncate text-right">
+                  <small class="text-muted">
+                    <%= post.area.name %>
+                  </small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 border">
+      <div>新着アカウント</div>
+      <div class="card">
+        <div>
+          <p>アカウント名</p>
+          <p>活動拠点</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
