@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
       resources :bookmarks, only: [:create, :destroy]
     end
+    resources :area_ratings, only: [:create]
     resources :areas, only: [:show]
     resources :prefectures, only: [:show]
     resources :regions, only: [:index]
