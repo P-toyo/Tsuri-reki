@@ -1,9 +1,10 @@
 <%= render "layouts/sidebar_left" %>
-<div class="col-8 border px-5">
+<div class="col-8 border px-2">
   <h2 class="text-center my-4">釣り場情報</h2>
     <div class="d-flex">
       <div class="col-4">
-        <%= image_tag @area.get_image, height: "200" %>
+        <%= image_tag @area.get_image, class: "mb-3", height: "250" %>
+        <div id="map"></div>
       </div>
       <table class="col-8 table table-borderless">
         <tr>
@@ -69,9 +70,9 @@
     <div>
       <%= form_with model: @area_rating do |f| %>
         <%= f.hidden_field :area_id, :value => @area.id %>
-        <div><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-75" %></div>
+        <div><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-100" %></div>
         <div id="score">
-          <%= f.label :score, "評価", class: "col-md-3 col-form-label" %>
+          <%= f.label :score, "釣り場の評価", class: "pt-0 col-form-label" %>
           <%= f.hidden_field :score, id: :review_star %>
         </div>
         <div><%= f.submit "送信", class: "btn btn-success mb-3 w-50" %></div>
@@ -89,48 +90,44 @@
     </div>
   </div>
 
-  <div class="row">
+  <%# エリアごとの今までの釣果をグラフにして表示 %>
+  <div class="row p-3">
     <div class="col-12">
-      <canvas id="myChart"></canvas>
+      <canvas id="Chart"></canvas>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
-      var ctx = document.getElementById('myChart');
+      var ctx = document.getElementById('Chart');
       var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-              datasets: [{
-                  label: '# of Votes',
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)',
-                      'rgba(255, 159, 64, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)',
-                      'rgba(255, 159, 64, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
+        type: 'bar',
+        data: {
+          labels: <%= raw(@species_name) %>,
+          datasets: [{
+            label: 'このエリアの釣果グラフ',
+            data: <%= raw(@catch_number) %>,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            yAxes: [                             // Y軸設定
+              {
+                ticks: {                         // 目盛り
+                  max: 20,
+                  stepSize: 1,                   // 軸間隔
+                  fontSize: 14                   // フォントサイズ
+                }
               }
+            ]
           }
+        }
       });
       </script>
     </div>
+  </div>
+
+  <%# GoogleMapの設定を決める %>
+  <div class="row">
+    <%= render "public/areas/map" %>
   </div>
 
 </div>
