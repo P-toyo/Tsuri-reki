@@ -24,3 +24,9 @@ window.raty = function(elem,opt) {
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+require("chartkick")
+require("chart.js")
+
+//= require chartkick
+//= require Chart.bundle
