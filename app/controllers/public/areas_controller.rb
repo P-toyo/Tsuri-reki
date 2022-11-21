@@ -1,6 +1,7 @@
 class Public::AreasController < ApplicationController
 
   def show
+    @google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV["GOOGLE_MAP_API"] }&callback=initMap"
     @area = Area.find(params[:id])
     @area_rating = AreaRating.new
     species_ids = Post.where(area_id: @area.id).pluck(:species_id).uniq
