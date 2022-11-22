@@ -37,10 +37,10 @@ class Public::PostsController < ApplicationController
     redirect_to request.referer
   end
 
-    private
+  private
 
-    def post_params
-      params.require(:post).permit(:species_id, :user_id, :area_id, :fishing_method_id, :prefecture_id, :date, :time_zone_id, :catch_number, :catch_other, :comment, :title, :image, :status)
-    end
+  def post_params
+    params.require(:post).permit(:species_id, :user_id, :area_id, :fishing_method_id, :prefecture_id, :date, :time_zone_id, :catch_number, :catch_other, :comment, :title, :image, :status)
+  end
 
 end
