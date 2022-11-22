@@ -21,11 +21,13 @@ class Public::PostsController < ApplicationController
   end
 
   def show
+    @sidebar_posts = Post.order(created_at: :desc).limit(10)
     @post = Post.find(params[:id])
     @comment = Comment.new
   end
 
   def index
+    @sidebar_posts = Post.order(created_at: :desc).limit(10)
     @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts : Post.all
     @posts = @posts.search(params[:search])
     @posts = @posts.order(created_at: :desc)
