@@ -34,4 +34,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :admin do
+    root :to =>"homes#top"
+    resources :posts, only: [:index, :show, :update, :destroy]
+    resources :users, only: [:index, :show, :update]
+    resources :areas, only: [:index, :create, :destroy]
+    resources :species, only: [:index, :create, :destroy]
+    resources :fishing_method, only: [:index, :create, :destroy]
+  end
+
 end

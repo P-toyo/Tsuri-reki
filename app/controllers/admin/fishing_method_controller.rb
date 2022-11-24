@@ -1,0 +1,33 @@
+class Admin::FishingMethodController < ApplicationController
+
+  def index
+    @fishing_methods = FishingMethod.all #全ての釣法データを取得
+    @new_fishing_method = FishingMethod.new #新規登録用のデータを取得
+  end
+
+  def create
+    fishing_method = FishingMethod.new(fishing_method_params) #送られてきたデータを取得
+    fishing_method.save #データを保存
+    redirect_to request.referer #釣法一覧画面に遷移
+  end
+
+  def destroy
+    fishing_method = FishingMethod.find(params[:id]) #削除するデータを取得
+    fishing_method.destroy #データを削除
+    redirect_to request.referer #釣法一覧画面に遷移
+  end
+
+  def destroy
+    fishing_method = FishingMethod.find(params[:id])
+    fishing_method.destroy
+    redirect_to request.referer
+  end
+
+
+  private
+
+  def fishing_method_params #受信するデータの選択
+    params.require(:fishing_method).permit(:name)
+  end
+
+end
