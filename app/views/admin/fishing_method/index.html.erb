@@ -1,0 +1,13 @@
+<div class="col-2"></div>
+
+<div class="col-8">
+  <h4 class="text-center">釣法一覧・編集</h4>
+  <% @fishing_methods.each do |fishing_method| %>
+    <div><%= fishing_method.name %> <%= link_to "削除", admin_fishing_method_path(fishing_method), method: :delete, "data-confirm" => "本当に削除しますか？" %></div>
+  <% end %>
+  <%= form_with model: @new_fishing_method, url: admin_fishing_method_index_path, class: "d-flex align-items-center", method: :post do |f| %>
+    <%= f.text_field :name %>
+    <%= f.submit "追加", class: "btn btn-success btn-sm" %>
+  <% end %>
+  <%= link_to "戻る", admin_root_path %>
+</div>

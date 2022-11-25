@@ -1,4 +1,4 @@
-<%= render "layouts/sidebar_left" %>
+<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
 
 <div class="col-8">
   <h2 class="text-center">新規投稿</h2>
@@ -8,10 +8,10 @@
       <div class="col-2 border p-0">
         <div>
           <div class="card text-center m-0">
-            <%= image_tag prefecture.get_post_image %>
+            <%= image_tag prefecture.get_prefecture_image(prefecture) %>
             <div class="card-body m-auto p-0">
               <p class="card-title m-auto font-weight-bold text-center">
-                <%= link_to "#{prefecture.name}", post_new_path(prefecture.id) %>
+                <%= link_to "#{prefecture.name}", post_new_path(prefecture) %>
               </p>
             </div>
           </div>

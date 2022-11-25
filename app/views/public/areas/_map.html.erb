@@ -1,0 +1,23 @@
+<div class="col-12">
+  <style>
+    #map {
+      height: 250px;
+      width: 250px;
+    }
+  </style>
+  <script>
+    let map
+    function initMap(){
+      geocoder = new google.maps.Geocoder()
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: <%= area.latitude %>, lng: <%= area.longitude %>},
+        zoom: 9,
+      });
+      marker = new google.maps.Marker({
+        position:  {lat: <%= area.latitude %>, lng: <%= area.longitude %>},
+        map: map
+      });
+    }
+  </script>
+  <script src="<%= google_api %>" async defer></script>
+</div>

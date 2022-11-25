@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_15_052239) do
+ActiveRecord::Schema.define(version: 2022_11_24_075401) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -52,11 +52,22 @@ ActiveRecord::Schema.define(version: 2022_11_15_052239) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "area_ratings", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "area_id"
+    t.string "comment"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "score"
+  end
+
   create_table "areas", force: :cascade do |t|
     t.integer "prefecture_id"
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "longitude"
+    t.float "latitude"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -76,6 +87,11 @@ ActiveRecord::Schema.define(version: 2022_11_15_052239) do
 
   create_table "fishing_methods", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "fishing_records", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -124,6 +140,8 @@ ActiveRecord::Schema.define(version: 2022_11_15_052239) do
     t.integer "species_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "catch_number"
+    t.integer "size"
   end
 
   create_table "regions", force: :cascade do |t|

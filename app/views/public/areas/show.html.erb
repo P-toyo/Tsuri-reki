@@ -1,10 +1,13 @@
-<%= render "layouts/sidebar_left" %>
-<div class="col-8 border px-5">
-  <h2 class="text-center my-4">釣り場情報</h2>
+<%# サイドバー左側 %>
+<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
 
+<div class="col-8 border px-2">
+  <h2 class="text-center my-4">釣り場情報</h2>
     <div class="d-flex">
       <div class="col-4">
-        <%= image_tag @area.get_image, height: "200" %>
+        <%= image_tag @area.get_image, class: "mb-3", height: "250" %>
+        <%= render "public/areas/map", {google_api: @google_api, area: @area} %> <%# GoogleMapの設定 %>
+        <div id="map"></div>
       </div>
       <table class="col-8 table table-borderless">
         <tr>
@@ -13,8 +16,28 @@
         </tr>
         <tr>
           <th class="text-center" style="width: 200px">評価点</th>
-          <td>
-            <div>レビューの値を入れるところ</div>
+          <td class="d-flex align-items-center">
+            <% if @area.area_ratings.average(:score).present? %>
+              <div id="rate_ave">
+                <script>
+                  $(document).on('turbolinks:load', function() {
+                    let raty_ave = document.querySelector('#rate_ave');
+                    rate_ave.innerHTML = ""
+                    let option_ave = {
+                        starOn: "<%= asset_path('star-on.png') %>",
+                        starOff: "<%= asset_path('star-off.png') %>",
+                        score: "<%= @area.area_ratings.average(:score) %>",
+                        half: false,
+                        readOnly: true,
+                    };
+                    raty(raty_ave ,option_ave);
+                  });
+                </script>
+              </div>
+              <div><%= @area.area_ratings.average(:score) %></div>点
+            <% else %>
+              評価がありません
+            <% end %>
           </td>
         </tr>
       </table>
@@ -22,21 +45,51 @@
 
   <div class="col-8 offset-4">
     <div>
-      <div class="text-center mb-2">コメント件数：<%= @post.comments.count %></div>
+      <div class="text-center mb-2">コメント件数：<%= @area.area_ratings.count %></div>
       <div class="border-bottom"></div>
-      <% @post.comments.each do |comment| %>
-        <div><%= comment.user.name %>さん</div>
-        <div class="mx-3"><%= comment.comment %></div>
-        <div class="text-right border-bottom"><%= comment.created_at.strftime('%Y/%m/%d') %></div>
+      <% @area.area_ratings.each do |rating| %>
+        <div><%= rating.user.name %>さん</div>
+        <div class="mx-3"><%= rating.comment %></div>
+        <div class="text-right border-bottom">
+          <div><%= rating.created_at.strftime('%Y/%m/%d') %></div>
+          <div id="rate_<%= rating.id %>"></div>
+          <script>
+            $(document).on('turbolinks:load', function() {
+              let raty_<%= rating.id %> = document.querySelector('#rate_<%= rating.id %>');
+              rate_<%= rating.id %>.innerHTML = ""
+              let option_<%= rating.id %> = {
+                  starOn: "<%= asset_path('star-on.png') %>",
+                  starOff: "<%= asset_path('star-off.png') %>",
+                  score: "<%= rating.score %>",
+                  half: false,
+                  readOnly: true,
+              };
+              raty(raty_<%= rating.id %> ,option_<%= rating.id %>);
+            });
+          </script>
+        </div>
       <% end %>
     </div>
     <div>
-      <%= form_with model: [@post, @comment] do |f| %>
-        <div><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-75" %></div>
+      <%= form_with model: @area_rating do |f| %>
+        <%= f.hidden_field :area_id, :value => @area.id %>
+        <div><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-100" %></div>
+        <div id="score">
+          <%= f.label :score, "釣り場の評価", class: "pt-0 col-form-label" %>
+          <%= f.hidden_field :score, id: :review_star %>
+        </div>
         <div><%= f.submit "送信", class: "btn btn-success mb-3 w-50" %></div>
+        <%= render "public/areas/raty" %> <%# 投稿フォームの5段階評価 %>
       <% end %>
     </div>
   </div>
+
+  <div class="row p-3">
+    <div class="col-12">
+      <canvas id="Chart"></canvas>
+      <%= render "public/areas/chart" %> <%# エリアごとの今までの釣果をグラフにして表示 %>
+    </div>
   </div>
+</div>
 
 <%= render "layouts/sidebar_right" %>

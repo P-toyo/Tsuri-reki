@@ -1,0 +1,12 @@
+<div class="col-8 offset-2">
+  <% @users.each do |user| %>
+    <div>
+      <%= form_with model: user, url: admin_user_path(user) do |f| %>
+        <%= link_to "#{user.name}", admin_user_path(user) %>
+        <%= f.select :is_deleted, [["有効","false"], ["退会","true"]] %>
+        <%= f.submit "退会ステータスを保存", class: "btn btn-success btn-sm" %>
+      <% end %>
+    </div>
+  <% end %>
+  <%= link_to "戻る", admin_root_path %>
+</div>

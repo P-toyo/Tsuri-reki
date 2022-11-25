@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many   :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many   :followings, through: :relationships, source: :followed
   has_many   :followers, through: :reverse_of_relationships, source: :follower
+  has_many   :area_ratings
+  has_many   :records
   belongs_to :prefecture
   has_many_attached :image
   # Include default devise modules. Others available are:
