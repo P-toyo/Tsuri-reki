@@ -1,0 +1,28 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('Chart');
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: <%= raw(@species_name) %>,
+    datasets: [{
+      label: 'このエリアの釣果グラフ',
+      data: <%= raw(@catch_number) %>,
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [                             // Y軸設定
+        {
+          ticks: {                         // 目盛り
+            max: 20,
+            stepSize: 1,                   // 軸間隔
+            fontSize: 14                   // フォントサイズ
+          }
+        }
+      ]
+    }
+  }
+});
+</script>

@@ -14,4 +14,12 @@ class Prefecture < ApplicationRecord
     end
   end
 
+  def get_prefecture_image(prefecture)
+    if File.exist?("./app/assets/images/prefectures/#{prefecture.name}.png")
+      "prefectures/#{prefecture.name}.png"
+    else
+      "noimage.png"
+    end
+  end
+
 end
