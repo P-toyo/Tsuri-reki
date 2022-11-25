@@ -2,4 +2,5 @@
   <% @posts.each do |post| %>
     <div><%= link_to "#{post.title}", admin_post_path(post) %></div>
   <% end %>
+  <%= link_to "戻る", admin_root_path %>
 </div>

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
       resources :bookmarks, only: [:create, :destroy]
     end
     resources :area_ratings, only: [:create]
-    resources :records, only: [:create, :update]
+    resources :records, only: [:create, :update, :destroy]
     resources :areas, only: [:show]
     resources :prefectures, only: [:show]
     resources :regions, only: [:index]
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
     root :to =>"homes#top"
     resources :posts, only: [:index, :show, :update, :destroy]
     resources :users, only: [:index, :show, :update]
-    resources :areas, only: [:index, :create, :destroy]
+    resources :areas, only: [:index, :create, :destroy, :update]
     resources :species, only: [:index, :create, :destroy]
     resources :fishing_method, only: [:index, :create, :destroy]
   end

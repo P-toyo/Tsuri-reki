@@ -1,9 +1,12 @@
+<%# サイドバー左側 %>
 <%= render "layouts/sidebar_left", posts: @sidebar_posts %>
+
 <div class="col-8 border px-2">
   <h2 class="text-center my-4">釣り場情報</h2>
     <div class="d-flex">
       <div class="col-4">
         <%= image_tag @area.get_image, class: "mb-3", height: "250" %>
+        <%= render "public/areas/map", {google_api: @google_api, area: @area} %> <%# GoogleMapの設定 %>
         <div id="map"></div>
       </div>
       <table class="col-8 table table-borderless">
@@ -76,60 +79,17 @@
           <%= f.hidden_field :score, id: :review_star %>
         </div>
         <div><%= f.submit "送信", class: "btn btn-success mb-3 w-50" %></div>
-        <script>
-          let elem = document.querySelector('#score');
-          let opt = {
-            starOn: "<%= asset_path('star-on.png') %>",
-            starOff: "<%= asset_path('star-off.png') %>",
-            scoreName: 'area_rating[score]',
-            half: false,
-          };
-          raty(elem,opt);
-        </script>
+        <%= render "public/areas/raty" %> <%# 投稿フォームの5段階評価 %>
       <% end %>
     </div>
   </div>
 
-  <%# エリアごとの今までの釣果をグラフにして表示 %>
   <div class="row p-3">
     <div class="col-12">
       <canvas id="Chart"></canvas>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-      var ctx = document.getElementById('Chart');
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: <%= raw(@species_name) %>,
-          datasets: [{
-            label: 'このエリアの釣果グラフ',
-            data: <%= raw(@catch_number) %>,
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [                             // Y軸設定
-              {
-                ticks: {                         // 目盛り
-                  max: 20,
-                  stepSize: 1,                   // 軸間隔
-                  fontSize: 14                   // フォントサイズ
-                }
-              }
-            ]
-          }
-        }
-      });
-      </script>
+      <%= render "public/areas/chart" %> <%# エリアごとの今までの釣果をグラフにして表示 %>
     </div>
   </div>
-
-  <%# GoogleMapの設定を決める %>
-  <div class="row">
-    <%= render "public/areas/map", google_api: @google_api %>
-  </div>
-
 </div>
 
 <%= render "layouts/sidebar_right" %>

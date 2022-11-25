@@ -1,4 +1,4 @@
-<h2 class="text-center my-4">投稿詳細</h2>
+<h2 class="text-center my-4">マイページ</h2>
 <div class="d-flex">
   <div class="col-4">
     <%= image_tag user.get_image, height: "200" %>
@@ -53,7 +53,9 @@
           <%= f.collection_select :species_id, Species.all, :id, :name, class: "w-25", include_blank: "魚種" %>
           <%= f.number_field :catch_number, min: 1, class: "w-25", placeholder: "合計数" %>
           <%= f.number_field :size, min: 1, class: "w-25", placeholder: "最大サイズ" %>
-          <%= f.submit "更新", class: "btn btn-success btn-sm" %>        <% end %>
+          <%= f.submit "更新", class: "btn btn-success btn-sm" %>
+          <%= link_to "削除", record_path(record), class: "btn btn-danger btn-sm", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+        <% end %>
       <% end %>
     </div>
   </div>

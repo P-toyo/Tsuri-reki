@@ -13,6 +13,12 @@ class Public::RecordsController < ApplicationController
     redirect_to request.referer
   end
 
+  def destroy
+    record = Record.find(params[:id])
+    record.destroy
+    redirect_to request.referer
+  end
+
   private
 
   def record_params

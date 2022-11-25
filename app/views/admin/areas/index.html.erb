@@ -3,12 +3,21 @@
 <div class="col-8">
   <h4 class="text-center">釣り場一覧・編集</h4>
   <% @areas.each do |area| %>
-    <div><%= area.prefecture.name %> <%= area.name %> <%= link_to "削除", admin_area_path(area), method: :delete, "data-confirm" => "本当に削除しますか？" %></div>
+    <%= form_with model: area, url: admin_area_path(area), class: "d-flex align-items-center" do |f| %>
+      <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_blank: "都道府県" %>
+      <%= f.text_field :name, placeholder: "釣り場名" %>
+      <%= f.text_field :longitude, placeholder: "経度" %>
+      <%= f.text_field :latitude, placeholder: "緯度" %>
+      <%= f.submit "編集", class: "btn btn-success btn-sm" %>
+    <% end %>
+    <%= link_to "削除", admin_area_path(area), method: :delete, "data-confirm" => "本当に削除しますか？" %>
   <% end %>
   <%= form_with model: @new_area, url: admin_areas_path, class: "d-flex align-items-center", method: :post do |f| %>
     <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_blank: "都道府県" %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, placeholder: "釣り場名" %>
+    <%= f.text_field :longitude, placeholder: "経度" %>
+    <%= f.text_field :latitude, placeholder: "緯度" %>
     <%= f.submit "追加", class: "btn btn-success btn-sm" %>
   <% end %>
-
+  <%= link_to "戻る", admin_root_path %>
 </div>
