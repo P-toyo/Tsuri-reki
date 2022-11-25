@@ -8,7 +8,7 @@
             <td style="width: 100px"><%= prefecture.name %></td>
             <td class="d-inline-lex">|
               <% prefecture.area.each do |area| %>
-                <u><%= link_to "#{area.name}", area_path(area.id) %></u> |
+                <u><%= link_to "#{area.name}", area_path(area.id), data: {"turbolinks" => false} %></u> |
               <% end %>
             </td>
           </tr>
