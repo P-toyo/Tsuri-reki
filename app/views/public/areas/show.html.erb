@@ -5,7 +5,6 @@
   <h2 class="text-center my-4">釣り場情報</h2>
     <div class="d-flex">
       <div class="col-4">
-        <%= image_tag @area.get_image, class: "mb-3", height: "250" %>
         <%= render "public/areas/map", {google_api: @google_api, area: @area} %> <%# GoogleMapの設定 %>
         <div id="map"></div>
       </div>
