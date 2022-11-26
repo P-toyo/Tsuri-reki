@@ -1,7 +1,7 @@
 <%= render "layouts/sidebar_left", posts: @sidebar_posts %>
 
 <div class="col-8 border">
-  <% if current_user.id != params[:id] %>
+  <% if user_signed_in? && current_user.id != params[:id] %>
     <%= render "public/users/current_user", user: @user %>
   <% else %>
     <%= render "public/users/other_user", user: @user %>
