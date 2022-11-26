@@ -16,10 +16,10 @@
         <tr>
           <th class="text-center" style="width: 200px">評価点</th>
           <td class="d-flex align-items-center">
+            <div id="rate_ave"></div>
             <% if @area.area_ratings.average(:score).present? %>
-              <div id="rate_ave">
                 <script>
-                  $(document).on('turbolinks:load', function() {
+                  document.addEventListener('DOMContentLoaded', function() {
                     let raty_ave = document.querySelector('#rate_ave');
                     rate_ave.innerHTML = ""
                     let option_ave = {
@@ -32,7 +32,6 @@
                     raty(raty_ave ,option_ave);
                   });
                 </script>
-              </div>
               <div><%= @area.area_ratings.average(:score) %></div>点
             <% else %>
               評価がありません
@@ -53,7 +52,7 @@
           <div><%= rating.created_at.strftime('%Y/%m/%d') %></div>
           <div id="rate_<%= rating.id %>"></div>
           <script>
-            $(document).on('turbolinks:load', function() {
+            document.addEventListener('DOMContentLoaded', function() {
               let raty_<%= rating.id %> = document.querySelector('#rate_<%= rating.id %>');
               rate_<%= rating.id %>.innerHTML = ""
               let option_<%= rating.id %> = {
