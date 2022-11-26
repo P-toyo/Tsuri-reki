@@ -72,7 +72,7 @@
         <tr>
           <th class="text-center" style="width: 200px">投稿ユーザー</th>
           <td>
-            <div><%= @post.user.name %>さん</div>
+            <div><%= link_to "#{@post.user.name}さん", user_path(@post.user_id) %></div>
             <div class="text-right">
               <% if user_signed_in? %>
                 <% if current_user.following?(@post.user) %>
