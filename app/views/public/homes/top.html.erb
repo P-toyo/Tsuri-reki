@@ -1,3 +1,42 @@
+<header class="bg-dark py-5">
+  <div class="container px-5">
+    <div class="row gx-5 justify-content-center">
+      <div class="col-lg-6">
+        <div class="text-center my-5">
+          <h1 class="display-5 fw-bolder text-white mb-2">つりれきへようこそ！</h1>
+          <p class="lead text-white-50 mb-4">ここは気軽に釣りの情報が交換できるような場所にしたいと思っています。</p>
+          <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+            <a class="btn btn-outline-primary btn-lg px-4 me-sm-3" href="#features">新規登録</a>
+            <a class="btn btn-outline-light btn-lg px-4 ml-4" href="#!">見てみる</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="py-5 border-bottom" id="features">
+  <div class="container my-5">
+    <div class="row gx-5">
+      <% @posts.each do |post| %>
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <div class="card text-center mx-5 border border-0">
+            <%= link_to post_path(post) do %>
+              <%= image_tag post.get_post_image, class: "card-img-top" %>
+            <% end %>
+            <div class="card-body bg-dark">
+              <p class="card-title font-weight-bold text-left"><%= link_to "#{post.title}", post_path(post), class: "text-white" %></p>
+              <p class="card-text text-left text-white"><%= post.comment %></p>
+              <p class="card-text text-right text-secondary"><%= post.area.prefecture.name %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+
 <div class="container">
   <div class="row">
     <div class="col-9 border">
