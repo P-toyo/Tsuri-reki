@@ -1,5 +1,7 @@
 class Admin::AreasController < ApplicationController
 
+  before_action :authenticate_admin!
+
   def index
     @areas = Area.all #全ての釣り場データを取得
     @new_area = Area.new #新規登録用のデータを取得

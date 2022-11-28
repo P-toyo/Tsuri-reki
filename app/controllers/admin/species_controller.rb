@@ -1,4 +1,7 @@
 class Admin::SpeciesController < ApplicationController
+
+  before_action :authenticate_admin!
+
   def index
     @species = Species.all #全ての魚種データを取得
     @new_species = Species.new #新規登録用のデータを取得
