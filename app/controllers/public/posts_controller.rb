@@ -1,11 +1,14 @@
 class Public::PostsController < ApplicationController
 
+  before_action :authenticate_user!, except: [:show, :index]
+
   def select_prefecture
     @prefectures = Prefecture.all
   end
 
   def new
     @post = Post.new
+    @prefecture_id = params[:id]
   end
 
   def create

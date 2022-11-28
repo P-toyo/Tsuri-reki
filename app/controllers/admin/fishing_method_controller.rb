@@ -1,5 +1,7 @@
 class Admin::FishingMethodController < ApplicationController
 
+  before_action :authenticate_admin!
+
   def index
     @fishing_methods = FishingMethod.all #全ての釣法データを取得
     @new_fishing_method = FishingMethod.new #新規登録用のデータを取得
