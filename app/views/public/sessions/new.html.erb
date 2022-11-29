@@ -1,26 +1,18 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-<div class="col-8 border px-5">
-  <h2 class="text-center my-4">ログイン</h2>
-  <%= form_with model: @user, url: user_session_path, id: "new_user", class: "new_user" do |f| %>
-    <table class="table table-borderless">
-      <tr>
-        <th class="text-center" style="width: 200px">メールアドレス</th>
-        <td><%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-100" %></td>
-      </tr>
-      <tr>
-        <th class="text-center" style="width: 200px">パスワード</th>
-        <td><%= f.password_field :password, autocomplete: "current-password" %></td>
-      </tr>
-      <tr>
-        <th></th>
-        <td><%= f.check_box :remember_me %>　記憶する</td>
-      </tr>
-      <tr>
-        <th></th>
-        <td><%= link_to "パスワードを再設定する", new_user_password_path %></td>
-      </tr>
-    </table>
-    <div class="text-center my-4"><%= f.submit "ログイン", class: "btn btn-success w-50" %></div>
-  <% end %>
-</div>
-<%= render "layouts/sidebar_right" %>
+<section class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <div class="card card-container my-5">
+          <%= form_with model: @user, url: user_session_path, id: "new_user", class: "new_user m-5" do |f| %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-1", placeholder: "メールアドレス" %>
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "パスワード" %>
+            <div class="my-2 text-secondary"><%= f.check_box :remember_me %>　入力内容を記憶する</div>
+            <%= f.submit "ログイン", class: "btn btn-lg btn-outline-secondary btn-block" %>
+            <div><%= link_to "パスワードを忘れた方はこちら", new_user_password_path, class: "text-secondary" %></div>
+            <div><%= link_to "まだ会員登録がお済みで無い方はこちら", new_user_registration_path, class: "text-secondary" %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

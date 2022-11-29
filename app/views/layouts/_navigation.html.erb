@@ -20,6 +20,14 @@
           <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "新規登録", new_user_registration_path, class: "nav-link" %></li>
         <% end %>
+        <li class="nav-item d-flex align-items-center mx-auto">
+          <div class="input-group">
+            <%= form_tag posts_path, class: "d-flex", method: :get do %>
+              <%= text_field_tag :search, placeholder="タイトルで検索", class: "form-control-sm input-group-prepend" %>
+              <span class="input-group-btn"><%= submit_tag "検索", :title => nil, class: "btn btn-outline-light btn-sm" %></span>
+            <% end %>
+          </div>
+        </li>
       </ul>
     </div>
   </div>
