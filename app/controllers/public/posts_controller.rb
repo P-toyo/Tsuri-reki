@@ -30,8 +30,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @sidebar_posts = Post.order(created_at: :desc).limit(10)
-    @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts : Post.all
+    @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts.page(params[:page]).per(12) : Post.all.page(params[:page]).per(12)
     @posts = @posts.search(params[:search])
     @posts = @posts.order(created_at: :desc)
   end

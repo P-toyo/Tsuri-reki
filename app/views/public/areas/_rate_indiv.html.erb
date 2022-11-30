@@ -1,0 +1,15 @@
+<div id="rate_<%= rating.id %>"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let raty_<%= rating.id %> = document.querySelector('#rate_<%= rating.id %>');
+    rate_<%= rating.id %>.innerHTML = ""
+    let option_<%= rating.id %> = {
+        starOn: "<%= asset_path('star-on.png') %>",
+        starOff: "<%= asset_path('star-off.png') %>",
+        score: "<%= rating.score %>",
+        half: false,
+        readOnly: true,
+    };
+    raty(raty_<%= rating.id %> ,option_<%= rating.id %>);
+  });
+</script>
