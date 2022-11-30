@@ -1,30 +1,33 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-<div class="col-8 border px-5">
-  <%= form_with model: @user, url: user_registration_path, id: "new_user", class: "new_user" do |f| %>
-    <h2 class="text-center my-4">新規登録</h2>
-    <table class="table table-borderless">
-      <tr>
-        <th class="text-center" style="width: 200px">ハンドルネーム</th>
-        <td><%= f.text_field :name, autofocus: true, class: "w-100"  %></td>
-      </tr>
-      <tr>
-        <th class="text-center">メールアドレス</th>
-        <td><%= f.email_field :email, autocomplete: "email", class: "w-100"  %></td>
-      </tr>
-      <tr>
-        <th class="text-center">パスワード(6文字以上)</th>
-        <td><%= f.password_field :password, autocomplete: "new-password", class: "w-100"  %></td>
-      </tr>
-      <tr>
-        <th class="text-center">パスワード(確認用)</th>
-        <td><%= f.password_field :password_confirmation, class: "w-100" %></td>
-      </tr>
-      <tr>
-        <th class="text-center">主な活動拠点</th>
-        <td><%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_blank: "選択して下さい" %></td>
-      </tr>
-    </table>
-    <div class="text-center my-4"><%= f.submit "新規登録", class: "btn btn-success w-50" %></div>
-  <% end %>
-</div>
-<%= render "layouts/sidebar_right" %>
+<!-- Header -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">新規登録</h2>
+    </div>
+  </div>
+</header>
+<!-- Section -->
+<section class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <div class="card card-container my-5">
+          <%= form_with model: @user, url: user_registration_path, id: "new_user", class: "new_user m-5" do |f| %>
+            <%= f.label :email, "メールアドレス", class: "m-0 text-dark" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-1", placeholder: "メールアドレス" %>
+            <%= f.label :password, "パスワード", class: "m-0 text-dark" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control mb-1" %>
+            <%= f.label :password, "パスワード(確認用)", class: "m-0 text-dark" %>
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control mb-1" %>
+            <%= f.label :name, "ハンドルネーム", class: "m-0 text-dark" %>
+            <%= f.text_field :name, autofocus: true, class: "form-control mb-1" %>
+            <%= f.label :prefecture_id, "活動拠点", class: "m-0 text-dark" %>
+            <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '選択してください' }, class:"form-control mb-3" %>
+            <%= f.submit "新規登録", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
+            <div><%= link_to "既に会員の方はこちら", new_user_session_path, class: "text-dark" %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

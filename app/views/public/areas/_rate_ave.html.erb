@@ -1,0 +1,20 @@
+<% if @area.area_ratings.average(:score).present? %>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        let raty_ave = document.querySelector('#rate_ave');
+        rate_ave.innerHTML = ""
+        let option_ave = {
+            starOn: "<%= asset_path('star-on.png') %>",
+            starOff: "<%= asset_path('star-off.png') %>",
+            score: "<%= @area.area_ratings.average(:score) %>",
+            half: false,
+            readOnly: true,
+        };
+        raty(raty_ave ,option_ave);
+      });
+    </script>
+  <div><%= @area.area_ratings.average(:score) %></div>点
+<% else %>
+  評価がありません
+<% end %>
+<div id="rate_ave"></div>

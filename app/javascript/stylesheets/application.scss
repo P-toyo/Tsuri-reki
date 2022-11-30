@@ -2,13 +2,35 @@
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
 
 .mouse-over {
-    background-color: #ffffff;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all  0.3s ease;
-    }
+  background-color: #ffffff;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all  0.3s ease;
+}
 
 .mouse-over:hover {
   background-color: #F2F2F2;
-  }
+}
+
+.pagination>li>a {
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+/* 表示しているページ番号のデザイン */
+.page-item.active .page-link {
+  background-color: #343a40; /*背景の色を変える*/
+}
+
+/*ホバー時のデザイン*/
+.pagination>li>a:hover {
+  background-color: #F2F2F2; /*背景の色を変える*/
+  color: #696969; /*文字の色を変える*/
+}
+
+/*カードから画像がはみ出ないようにする*/
+.card-img {
+    max-width: 100%;
+    flex-shrink:0;
+ }

@@ -1,3 +1,43 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-<%= render "public/regions/index", regions: @regions %>
-<%= render "layouts/sidebar_right" %>
+<!-- Header -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">釣り場一覧</h2>
+    </div>
+  </div>
+</header>
+<!-- Section -->
+<section class="bg-light pt-5">
+  <div class="container px-4 px-lg-5 mb-5">
+    <% @regions.each do |region| %>
+      <div class="text-left h3 text-dark"><%= region.name %></div>
+      <div class="row">
+        <% region.prefecture.each do |prefecture| %>
+          <div class="d-flex col-12 col-lg-6 align-items-center pb-3">
+            <div class="card w-100 mouse-over">
+              <div class="row g-0">
+                <div class="col-4 d-flex align-items-center">
+                  <%= image_tag prefecture.get_prefecture_image(prefecture), class: "card-img" %>
+                </div>
+                <div class="col-8 px-0">
+                  <div class="card-body py-2 text-dark">
+                    <h5 class="card-title"><%= prefecture.name %></h5>
+                    <% if prefecture.area.present? %>
+                      <p class="card-text">
+                        <% prefecture.area.each do |area| %>
+                          <%= link_to "#{area.name}", area_path(area), class: "btn btn-outline-secondary btn-sm" %>
+                        <% end %>
+                      </p>
+                    <% else %>
+                      <p class="card-text">釣り場が登録されていません</p>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
