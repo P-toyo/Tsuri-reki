@@ -1,7 +1,36 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-<div class="col-8">
-  <div class="row">
-    <%= render "public/posts/index", posts: @posts %>
+<!-- Header -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">投稿一覧</h2>
+    </div>
   </div>
-</div>
-<%= render "layouts/sidebar_right" %>
+</header>
+<!-- Section -->
+<section class="bg-light pt-5">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <% @posts.each do |post| %>
+        <div class="col mb-5">
+          <%= link_to post_path(post) do %>
+          <div class="card mouse-over h-100">
+            <!-- Post image-->
+            <%= image_tag post.get_post_image, class: "card-img-top p-2" %>
+              <!-- Post details-->
+              <div class="card-body pt-0 text-dark">
+                <p class="card-text text-left m-0"><%= post.date %> <%= post.time_zone.time_zone %></p>
+                <p class="card-text text-left m-0"><%= post.species.name %>:<%= post.catch_number %>匹</p>
+                <p class="card-title h5 font-weight-bold text-left m-0"><u><%= post.title %></u></p>
+                <p class="card-text text-left m-0"><%= post.comment %></p>
+                <p class="card-text text-right m-0"><%= post.area.prefecture.name %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="text-center mx-auto mb-5"><%= paginate @posts %></div>
+    </div>
+  </div>
+</section>

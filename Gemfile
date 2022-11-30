@@ -74,3 +74,5 @@ gem "net-imap"
 gem 'jquery-rails'
 
 gem "chartkick"
+
+gem 'kaminari'

@@ -1,5 +1,7 @@
 class Public::RecordsController < ApplicationController
 
+  before_action :authenticate_user!
+
   def create
     record = Record.new(record_params)
     record.user_id = current_user.id

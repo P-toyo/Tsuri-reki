@@ -10,7 +10,7 @@
       </tr>
       <tr>
         <th class="text-center" style="width: 200px">釣行場所</th>
-        <td><%= f.collection_select :area_id, Area.all, :id, :name, include_blank: "選択して下さい" %></td>
+        <td><%= f.collection_select :area_id, Area.where(prefecture_id: @prefecture_id), :id, :name, include_blank: "選択して下さい" %></td>
       </tr>
       <tr>
         <th class="text-center">メインの釣果</th>

@@ -1,11 +1,14 @@
 class Public::PostsController < ApplicationController
 
+  before_action :authenticate_user!, except: [:show, :index]
+
   def select_prefecture
     @prefectures = Prefecture.all
   end
 
   def new
     @post = Post.new
+    @prefecture_id = params[:id]
   end
 
   def create
@@ -27,8 +30,7 @@ class Public::PostsController < ApplicationController
   end
 
   def index
-    @sidebar_posts = Post.order(created_at: :desc).limit(10)
-    @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts : Post.all
+    @posts = params[:prefecture_id].present? ? Prefecture.find(params[:prefecture_id]).posts.page(params[:page]).per(12) : Post.all.page(params[:page]).per(12)
     @posts = @posts.search(params[:search])
     @posts = @posts.order(created_at: :desc)
   end
