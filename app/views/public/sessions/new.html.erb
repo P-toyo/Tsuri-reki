@@ -11,15 +11,22 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <!-- ログインフォーム -->
         <div class="card card-container my-5">
           <%= form_with model: @user, url: user_session_path, id: "new_user", class: "new_user m-5" do |f| %>
+            <!-- メールアドレス入力部 -->
             <%= f.label :email, "メールアドレス", class: "m-0 text-dark" %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-1" %>
+            <!-- パスワード入力部 -->
             <%= f.label :password, "パスワード", class: "m-0 text-dark" %>
             <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+            <!-- ログイン情報を記憶 -->
             <div class="my-2 text-dark"><%= f.check_box :remember_me %>　入力内容を記憶する</div>
+            <!-- ログインボタン -->
             <%= f.submit "ログイン", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
+            <!-- パスワード再設定ページへのリンク -->
             <div><%= link_to "パスワードを忘れた方はこちら", new_user_password_path, class: "text-dark" %></div>
+            <!-- 新規会員登録ページへのリンク -->
             <div><%= link_to "まだ会員登録がお済みで無い方はこちら", new_user_registration_path, class: "text-dark" %></div>
           <% end %>
         </div>
