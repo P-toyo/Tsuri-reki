@@ -1,25 +1,31 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
   <div class="container px-5">
+    <!-- アプリケーションタイトル -->
     <%= link_to "つりれき", root_path, class: "navbar-brand" %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        <!-- 共通のナビゲーションバー -->
         <li class="nav-item"><%= link_to "About", root_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "投稿一覧", posts_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "釣り場一覧", regions_path, class: "nav-link" %></li>
         <% if user_signed_in? %>
+          <!-- ユーザーログイン時のナビゲーションバー -->
           <li class="nav-item"><%= link_to "新規投稿", posts_select_prefecture_path, class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, class: "nav-link", method: :delete %></li>
           <li class="nav-item"><%= link_to "マイページ", user_path(current_user), class: "nav-link" %></li>
         <% elsif admin_signed_in? %>
+          <!-- 管理者ログイン時のナビゲーションバー -->
           <li class="nav-item"><%= link_to "ログアウト", destroy_admin_session_path, class: "nav-link", method: :delete %></li>
           <li class="nav-item"><%= link_to "管理画面", admin_root_path, class: "nav-link" %></li>
         <% else %>
+          <!-- 非ログイン時のナビゲーションバー -->
           <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "新規登録", new_user_registration_path, class: "nav-link" %></li>
         <% end %>
+        <!-- 投稿タイトルで検索を行うためのフォーム -->
         <li class="nav-item d-flex align-items-center mx-auto">
           <div class="input-group">
             <%= form_tag posts_path, class: "d-flex", method: :get do %>
