@@ -11,19 +11,27 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <!-- 新規会員登録フォーム -->
         <div class="card card-container my-5">
           <%= form_with model: @user, url: user_registration_path, id: "new_user", class: "new_user m-5" do |f| %>
+            <!-- メールアドレス入力部 -->
             <%= f.label :email, "メールアドレス", class: "m-0 text-dark" %>
             <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-1", placeholder: "メールアドレス" %>
+            <!-- パスワード入力部 -->
             <%= f.label :password, "パスワード", class: "m-0 text-dark" %>
             <%= f.password_field :password, autocomplete: "new-password", class: "form-control mb-1" %>
+            <!-- 確認用パスワード入力部 -->
             <%= f.label :password, "パスワード(確認用)", class: "m-0 text-dark" %>
             <%= f.password_field :password, autocomplete: "new-password", class: "form-control mb-1" %>
+            <!-- ハンドルネーム入力部 -->
             <%= f.label :name, "ハンドルネーム", class: "m-0 text-dark" %>
             <%= f.text_field :name, autofocus: true, class: "form-control mb-1" %>
+            <!-- 活動拠点選択部 -->
             <%= f.label :prefecture_id, "活動拠点", class: "m-0 text-dark" %>
             <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '選択してください' }, class:"form-control mb-3" %>
+            <!-- 新規登録ボタン -->
             <%= f.submit "新規登録", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
+            <!-- ログインページへのリンク -->
             <div><%= link_to "既に会員の方はこちら", new_user_session_path, class: "text-dark" %></div>
           <% end %>
         </div>

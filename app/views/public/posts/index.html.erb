@@ -14,14 +14,19 @@
         <div class="col mb-5">
           <%= link_to post_path(post) do %>
           <div class="card mouse-over h-100">
-            <!-- Post image-->
+            <!-- 投稿画像を表示 -->
             <%= image_tag post.get_post_image, class: "card-img-top p-2" %>
-              <!-- Post details-->
+              <!-- 投稿詳細 -->
               <div class="card-body pt-0 text-dark">
+                <!-- 釣行日・時間帯 -->
                 <p class="card-text text-left m-0"><%= post.date %> <%= post.time_zone.time_zone %></p>
+                <!-- 釣れた魚と釣果数 -->
                 <p class="card-text text-left m-0"><%= post.species.name %>:<%= post.catch_number %>匹</p>
+                <!-- 投稿タイトル -->
                 <p class="card-title h5 font-weight-bold text-left m-0"><u><%= post.title %></u></p>
+                <!-- 投稿コメント -->
                 <p class="card-text text-left m-0"><%= post.comment %></p>
+                <!-- 釣り場の都道府県 -->
                 <p class="card-text text-right m-0"><%= post.area.prefecture.name %></p>
               </div>
             </div>
@@ -30,6 +35,7 @@
       <% end %>
     </div>
     <div class="row">
+      <!-- ページネーション -->
       <div class="text-center mx-auto mb-5"><%= paginate @posts %></div>
     </div>
   </div>
