@@ -51,7 +51,7 @@
           </tr>
           <tr>
             <th class="text-center">コメント</th>
-            <td><%= f.text_area :comment %></td>
+            <td><%= f.text_area :comment %></br>コメントの感情分析スコア<%= @post.score %></td>
           </tr>
           <tr>
             <th class="text-center">公開設定</th>
@@ -68,6 +68,12 @@
     <div class="d-flex">
       <div class="col-4">
         <%= image_tag @post.get_post_image, height: "200" %>
+        <div class="tag-box">
+          <div class="text-dark mt-2">AIによるタグ付け</br>(クリックで削除)</div>
+          <% @post.image_tags.each do |image_tag| %>
+            <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
+          <% end %>
+        </div>
       </div>
       <table class="col-8 table table-borderless">
         <tr>
@@ -107,7 +113,7 @@
         </tr>
         <tr>
           <th class="text-center">投稿者のコメント</th>
-          <td><%= @post.comment %></td>
+          <td><%= @post.comment %></br>コメントの感情分析スコア<%= @post.score %></td>
         </tr>
       </table>
     </div>
