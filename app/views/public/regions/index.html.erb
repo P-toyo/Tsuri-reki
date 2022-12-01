@@ -25,7 +25,7 @@
                     <% if prefecture.area.present? %>
                       <p class="card-text">
                         <% prefecture.area.each do |area| %>
-                          <%= link_to "#{area.name}", area_path(area), class: "btn btn-outline-secondary btn-sm" %>
+                          <%= link_to "#{area.name}", area_path(area), class: "btn btn-outline-secondary btn-sm", data: {"turbolinks" => false} %>
                         <% end %>
                       </p>
                     <% else %>

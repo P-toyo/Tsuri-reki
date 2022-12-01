@@ -1,7 +1,7 @@
 class Public::AreasController < ApplicationController
 
   def show
-    @google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV["GOOGLE_MAP_API"] }&callback=initMap"
+    @google_api = "https://maps.googleapis.com/maps/api/js?key=#{ ENV["GOOGLE_API"] }&callback=initMap"
     @sidebar_posts = Post.order(created_at: :desc).limit(10)
     @area = Area.find(params[:id])
     @area_rating = AreaRating.new
