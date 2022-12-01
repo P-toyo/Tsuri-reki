@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
       resources :bookmarks, only: [:create, :destroy]
     end
+    resources :image_tags, only: [:destroy]
     resources :area_ratings, only: [:create]
     resources :records, only: [:create, :update, :destroy]
     resources :areas, only: [:show]

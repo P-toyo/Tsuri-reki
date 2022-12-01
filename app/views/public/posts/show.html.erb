@@ -1,4 +1,3 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
 <div class="col-8 border px-5">
   <h2 class="text-center my-4">投稿詳細</h2>
   <h5 class="text-right my-2">
@@ -16,6 +15,12 @@
       <div class="d-flex">
         <div class="col-4">
           <%= image_tag @post.get_post_image, height: "200" %>
+          <div class="tag-box">
+            <div class="text-dark mt-2">AIによるタグ付け</br>(クリックで削除)</div>
+            <% @post.image_tags.each do |image_tag| %>
+              <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
+            <% end %>
+          </div>
         </div>
         <table class="col-8 table table-borderless">
           <tr>
@@ -128,5 +133,3 @@
     </div>
   </div>
 </div>
-
-<%= render "layouts/sidebar_right" %>

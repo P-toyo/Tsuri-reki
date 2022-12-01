@@ -20,6 +20,11 @@ class Public::PostsController < ApplicationController
     post_tag.prefecture_id = post.prefecture_id
     post_tag.post_id = post.id
     post_tag.save!
+    #Cloud Vision APIに投稿画像を渡し、返り値よりタグを作成
+    tags = Vision.get_image_data(post.image[0])
+    tags.each do |tag|
+      post.image_tags.create(name: tag)
+    end
     redirect_to post_path(post.id)
   end
 
