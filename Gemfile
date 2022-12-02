@@ -76,3 +76,5 @@ gem 'jquery-rails'
 gem "chartkick"
 
 gem 'kaminari'
+
+gem 'figaro'
