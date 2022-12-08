@@ -18,6 +18,7 @@ class Public::PostsController < ApplicationController
     post.user_id = current_user.id
     post.prefecture_id = post.area.prefecture.id
     post.save!
+    #都道府県検索用タグの付与
     post_tag = PostTag.new
     post_tag.prefecture_id = post.prefecture_id
     post_tag.post_id = post.id
