@@ -13,7 +13,7 @@ class Public::PostsController < ApplicationController
 
   def create
     post = Post.new(post_params)
-    #Cloud Natural Language APIにコメントを渡し、返り値を保存
+    #Cloud Natural Language APIにコメントを渡し、返り値(分析値)を保存
     post.score = Language.get_data(post_params[:comment])
     post.user_id = current_user.id
     post.prefecture_id = post.area.prefecture.id

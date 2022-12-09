@@ -1,4 +1,4 @@
-<!-- Header -->
+<!-- ヘッダー -->
 <header class="bg-dark py-4">
   <div class="container px-4 px-lg-5">
     <div class="text-center text-white">
@@ -6,10 +6,11 @@
     </div>
   </div>
 </header>
-<!-- Section -->
+<!-- セクション -->
 <section class="bg-light pt-5">
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <!-- カードを使って投稿を12件ごとにページングして表示 -->
       <% @posts.each do |post| %>
         <div class="col mb-5">
           <%= link_to post_path(post) do %>
@@ -35,7 +36,7 @@
       <% end %>
     </div>
     <div class="row">
-      <!-- ページネーション -->
+      <!-- ページネーションのページ選択部 -->
       <div class="text-center mx-auto mb-5"><%= paginate @posts %></div>
     </div>
   </div>
