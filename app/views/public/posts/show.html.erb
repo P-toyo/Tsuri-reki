@@ -1,4 +1,77 @@
-<div class="col-8 border px-5">
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">投稿詳細</h2>
+    </div>
+  </div>
+</header>
+<!-- セクション -->
+<section class="bg-light">
+  <%= form_with model: @post do |f| %>
+    <div class="">
+      <div class="row">
+        <div class="col-8 offset-2 bg-white">
+          <%= image_tag @post.get_post_image, height: "200" %>
+          <div class="tag-box">
+            <div class="text-dark mt-2">AIによるタグ付け</br>(クリックで削除)</div>
+            <% @post.image_tags.each do |image_tag| %>
+              <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <table class="col-8 offset-2 table bg-white">
+          <tr>
+            <th class="text-center" sytle="width: 200px">投稿タイトル</th>
+            <td><%= f.text_field :title %></td>
+          </tr>
+          <tr>
+            <th class="text-center" style="width: 200px">投稿ユーザー</th>
+            <td>
+              <div><%= @post.user.name %>さん</div>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-center">釣行日・時間帯</th>
+            <td><%= f.date_field :date %> <%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone %></td>
+          </tr>
+          <tr>
+            <th class="text-center">釣り場</th>
+            <td><%= f.collection_select :area_id, Area.all, :id, :name %></td>
+          </tr>
+          <tr>
+            <th class="text-center">メインの釣果</th>
+            <td><%= f.collection_select :species_id, Species.all, :id, :name %> <%= f.number_field :catch_number, min: 1, class: "w-25" %>匹</td>
+          </tr>
+          <tr>
+            <th class="text-center">釣法</th>
+            <td><%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name %></td>
+          </tr>
+          <tr>
+            <th class="text-center">コメント</th>
+            <td><%= f.text_area :comment %></br>コメントの感情分析スコア<%= @post.score %></td>
+          </tr>
+          <tr>
+            <th class="text-center">公開設定</th>
+            <td><%= f.select :status, [["公開","true"], ["非公開","false"]] %></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><%= f.submit "編集内容を保存", class: "btn btn-success btn-sm w-100" %></td>
+          </tr>
+        </table>
+      </div>
+
+
+    </div>
+  <% end %>
+</section>
+
+
+<div class="col-8 offset-2 px-5">
   <h2 class="text-center my-4">投稿詳細</h2>
   <h5 class="text-right my-2">
     <% if user_signed_in? %>
