@@ -18,18 +18,24 @@
 <section class="py-5 border-bottom bg-light" id="features">
   <div class="container">
     <div class="row gx-5">
+      <!-- カードで最新の三件分の投稿を表示 -->
       <% @posts.each do |post| %>
         <div class="col-lg-4 mb-5 mb-lg-0">
           <%= link_to post_path(post) do %>
             <div class="card mouse-over text-center mx-5">
-              <!-- Post image-->
+              <!-- 投稿画像 -->
               <%= image_tag post.get_post_image, class: "card-img-top p-2" %>
-              <!-- Post details-->
+              <!-- 投稿内容 -->
               <div class="card-body pt-0 text-dark">
+                <!-- 投稿日時 -->
                 <p class="card-text text-left m-0"><%= post.date %> <%= post.time_zone.time_zone %></p>
+                <!-- 釣果 -->
                 <p class="card-text text-left m-0"><%= post.species.name %>:<%= post.catch_number %>匹</p>
+                <!-- 投稿タイトル -->
                 <p class="card-title h5 font-weight-bold text-left m-0"><u><%= post.title %></u></p>
+                <!-- 投稿コメント -->
                 <p class="card-text text-left m-0"><%= post.comment %></p>
+                <!-- 釣行都道府県 -->
                 <p class="card-text text-right m-0"><%= post.area.prefecture.name %></p>
               </div>
             </div>
@@ -44,12 +50,15 @@
   <div class="container">
     <div class="row">
       <div class="col-12 mb-5 mb-lg-0">
+        <!-- カードで運営からのお知らせを3件表示 -->
         <div class="card text-center mx-5">
           <h4 class="text-left m-3 border-bottom text-dark">Information</h4>
           <div class="card-body py-0">
             <%# @informations.each do |information| %>
               <div class="mouse-over text-dark">
+                <!-- お知らせ日時 -->
                 <p class="card-text text-left m-0">information.date</p>
+                <!-- お知らせタイトル -->
                 <p class="card-title h5 font-weight-bold text-left mx-2 pb-3 border-bottom"><u>link_to "#{information.title}", information_path(information)</u></p>
               </div>
               <div class="mouse-over text-dark">
@@ -61,6 +70,7 @@
                 <p class="card-title h5 font-weight-bold text-left mx-2 pb-3 border-bottom"><u>link_to "#{information.title}", information_path(information)</u></p>
               </div>
               <%# end %>
+            <!-- お知らせ一覧画面へのリンク -->
             <p class="text-right text-dark mr-3">全て見る>></p>
           </div>
         </div>
