@@ -28,7 +28,7 @@
             <%= f.text_field :name, autofocus: true, class: "form-control mb-1" %>
             <!-- 活動拠点選択部 -->
             <%= f.label :prefecture_id, "活動拠点", class: "m-0 text-dark" %>
-            <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '選択してください' }, class:"form-control mb-3" %>
+            <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '選択してください' }, class: "form-control mb-3" %>
             <!-- 新規登録ボタン -->
             <%= f.submit "新規登録", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
             <!-- ログインページへのリンク -->

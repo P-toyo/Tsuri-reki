@@ -9,6 +9,12 @@
 <!-- セクション -->
 <section class="bg-light pt-5">
   <div class="container px-4 px-lg-5">
+    <div class="row">
+      <!-- 都道府県で投稿を絞り込み -->
+      <%= form_tag posts_path, method: :get, class: "boards__searchForm my-auto" do %>
+        <%= select_tag :prefecture_id, options_from_collection_for_select(Prefecture.all, :id, :name, params[:prefecture_id]), {prompt: "都道府県で絞り込み", onchange: "submit(this.form);", class: "form-control mb-3 margin"} %>
+      <% end %>
+    </div>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <!-- カードを使って投稿を12件ごとにページングして表示 -->
       <% @posts.each do |post| %>
@@ -36,7 +42,7 @@
       <% end %>
     </div>
     <div class="row">
-      <!-- ページネーションのページ選択部 -->
+      <!-- ページネーションのページ選択 -->
       <div class="text-center mx-auto mb-5"><%= paginate @posts %></div>
     </div>
   </div>
