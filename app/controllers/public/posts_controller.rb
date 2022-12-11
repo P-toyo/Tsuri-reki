@@ -12,16 +12,23 @@ class Public::PostsController < ApplicationController
   end
 
   def create
+    #ストロングパラメータ
     post = Post.new(post_params)
     #Cloud Natural Language APIにコメントを渡し、返り値(分析値)を保存
     post.score = Language.get_data(post_params[:comment])
+    #投稿にユーザーIDを紐付け
     post.user_id = current_user.id
+    #釣行場所を登録
     post.prefecture_id = post.area.prefecture.id
+    #投稿を保存
     post.save!
     #都道府県検索用タグの付与
     post_tag = PostTag.new
+    #タグ用のテーブルに投稿の釣行場所を登録
     post_tag.prefecture_id = post.prefecture_id
+    #タグ用のテーブルに投稿IDを登録
     post_tag.post_id = post.id
+    #タグを保存
     post_tag.save!
     #Cloud Vision APIに投稿画像を渡し、返り値よりタグを作成
     tags = Vision.get_image_data(post.image[0])
