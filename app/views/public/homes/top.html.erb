@@ -1,3 +1,4 @@
+<!-- ヘッダー -->
 <header class="border-bottom bg-dark py-5">
   <div class="container px-5">
     <div class="row gx-5 justify-content-center">
@@ -6,6 +7,7 @@
           <h1 class="display-5 fw-bolder text-white mb-2">つりれきへようこそ！</h1>
           <p class="lead text-white-50 mb-4">気軽に釣りの情報が交換できるような場所にしたいと思っています。積極的な情報交換をしてみんなで釣りを楽しみませんか？</p>
           <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+            <!-- 新規登録と投稿一覧へのリンクをボタンで表示 -->
             <%= link_to "新規登録", new_user_registration_path, class: "btn btn-outline-primary btn-lg px-4 me-sm-3" %>
             <%= link_to "投稿一覧", posts_path, class: "btn btn-outline-light btn-lg px-4 ml-4" %>
           </div>
@@ -14,7 +16,7 @@
     </div>
   </div>
 </header>
-
+<!-- セクション -->
 <section class="py-5 border-bottom bg-light" id="features">
   <div class="container">
     <div class="row gx-5">
@@ -45,25 +47,27 @@
     </div>
   </div>
 </section>
-
+<!-- セクション -->
 <section class="py-5 border-bottom bg-light">
   <div class="container">
     <div class="row">
       <div class="col-12 mb-5 mb-lg-0">
         <!-- カードで運営からのお知らせを3件表示 -->
         <div class="card text-center mx-5">
-          <h4 class="text-left m-3 border-bottom text-dark">Information</h4>
+          <h4 class="text-left mx-3 mt-3 mb-0 border-bottom text-dark">Information</h4>
           <div class="card-body py-0">
             <% @information.each do |information| %>
               <div class="mouse-over text-dark">
                 <!-- お知らせ日時 -->
-                <p class="card-text text-left m-0"><%= information.created_at.strftime('%Y/%m/%d') %></p>
+                <p class="card-text text-left m-0 pt-2 text-dark"><%= information.created_at.strftime('%Y/%m/%d') %></p>
                 <!-- お知らせタイトル -->
-                <p class="card-title h5 font-weight-bold text-left mx-2 pb-3 border-bottom"><u><%= link_to "#{information.title}", information_path(information) %></u></p>
+                <p class="card-title h5 font-weight-bold text-left mx-2 my-0"><u><%= link_to "#{information.title}", information_path(information), class: "text-dark" %></u></p>
+                <!-- お知らせ本文 -->
+                <p class="card-text text-left px-4 pb-2 border-bottom text-dark text-truncate"><%= information.body %></p>
               </div>
             <% end %>
             <!-- お知らせ一覧画面へのリンク -->
-            <p class="text-right text-dark mr-3"><%= link_to "全て見る>>", information_index_path %></p>
+            <p class="text-right text-dark mr-3 mt-2"><%= link_to "全て見る>>", information_index_path, class: "text-dark" %></p>
           </div>
         </div>
       </div>
