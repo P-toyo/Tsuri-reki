@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     resources :areas, only: [:show]
     resources :prefectures, only: [:show]
     resources :regions, only: [:index]
+    resources :information, only: [:index, :show]
     resources :users, only: [:show] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
