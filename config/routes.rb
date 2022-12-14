@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root :to => "homes#top"
+    get "homes/about"
     get "posts/select_prefecture"
     get "posts/new/:id" => "posts#new", as: "post_new"
     resources :posts, only: [:index, :show, :create, :update] do
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
     resources :prefectures, only: [:show]
     resources :regions, only: [:index]
     resources :information, only: [:index, :show]
-    resources :users, only: [:show] do
+    resources :users, only: [:show, :update] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
       get 'followers' => 'relationships#followers', as: 'followers'
