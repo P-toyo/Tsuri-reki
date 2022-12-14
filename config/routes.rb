@@ -42,7 +42,8 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show, :update]
     resources :areas, only: [:index, :create, :destroy, :update]
     resources :species, only: [:index, :create, :destroy]
-    resources :fishing_method, only: [:index, :create, :destroy]
+    resources :fishing_methods, only: [:index, :create, :destroy]
+    resources :information, only: [:index, :create, :destroy, :update]
   end
 
 end
