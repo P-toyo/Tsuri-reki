@@ -8,207 +8,116 @@
 </header>
 <!-- セクション -->
 <section class="bg-light">
-  <%= form_with model: @post do |f| %>
-    <div class="">
-      <div class="row">
-        <div class="col-8 offset-2 bg-white">
-          <%= image_tag @post.get_post_image, height: "200" %>
-          <div class="tag-box">
-            <div class="text-dark mt-2">AIによるタグ付け</br>(クリックで削除)</div>
-            <% @post.image_tags.each do |image_tag| %>
-              <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
-            <% end %>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <table class="col-8 offset-2 table bg-white">
-          <tr>
-            <th class="text-center" sytle="width: 200px">投稿タイトル</th>
-            <td><%= f.text_field :title %></td>
-          </tr>
-          <tr>
-            <th class="text-center" style="width: 200px">投稿ユーザー</th>
-            <td>
-              <div><%= @post.user.name %>さん</div>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-center">釣行日・時間帯</th>
-            <td><%= f.date_field :date %> <%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone %></td>
-          </tr>
-          <tr>
-            <th class="text-center">釣り場</th>
-            <td><%= f.collection_select :area_id, Area.all, :id, :name %></td>
-          </tr>
-          <tr>
-            <th class="text-center">メインの釣果</th>
-            <td><%= f.collection_select :species_id, Species.all, :id, :name %> <%= f.number_field :catch_number, min: 1, class: "w-25" %>匹</td>
-          </tr>
-          <tr>
-            <th class="text-center">釣法</th>
-            <td><%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name %></td>
-          </tr>
-          <tr>
-            <th class="text-center">コメント</th>
-            <td><%= f.text_area :comment %></br>コメントの感情分析スコア<%= @post.score %></td>
-          </tr>
-          <tr>
-            <th class="text-center">公開設定</th>
-            <td><%= f.select :status, [["公開","true"], ["非公開","false"]] %></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><%= f.submit "編集内容を保存", class: "btn btn-success btn-sm w-100" %></td>
-          </tr>
-        </table>
-      </div>
-
-
-    </div>
-  <% end %>
-</section>
-
-
-<div class="col-8 offset-2 px-5">
-  <h2 class="text-center my-4">投稿詳細</h2>
-  <h5 class="text-right my-2">
-    <% if user_signed_in? %>
-      <% if @post.bookmarked_by?(current_user) %>
-        <%= link_to "ブックマークを外す", post_bookmark_path(@post), class: "btn btn-danger btn-sm", method: :delete %>
-      <% else %>
-        <%= link_to "投稿をブックマーク", post_bookmarks_path(@post), class: "btn btn-primary btn-sm", method: :post %>
-      <% end %>
-    <% end %>
-  </h5>
-
-  <% if user_signed_in? && current_user.id == @post.user_id %>
-    <%= form_with model: @post do |f| %>
-      <div class="d-flex">
-        <div class="col-4">
-          <%= image_tag @post.get_post_image, height: "200" %>
-          <div class="tag-box">
-            <div class="text-dark mt-2">AIによるタグ付け</br>(クリックで削除)</div>
-            <% @post.image_tags.each do |image_tag| %>
-              <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
-            <% end %>
-          </div>
-        </div>
-        <table class="col-8 table table-borderless">
-          <tr>
-            <th class="text-center" sytle="width: 200px">投稿タイトル</th>
-            <td><%= f.text_field :title %></td>
-          </tr>
-          <tr>
-            <th class="text-center" style="width: 200px">投稿ユーザー</th>
-            <td>
-              <div><%= @post.user.name %>さん</div>
-            </td>
-          </tr>
-          <tr>
-            <th class="text-center">釣行日・時間帯</th>
-            <td><%= f.date_field :date %> <%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone %></td>
-          </tr>
-          <tr>
-            <th class="text-center">釣り場</th>
-            <td><%= f.collection_select :area_id, Area.all, :id, :name %></td>
-          </tr>
-          <tr>
-            <th class="text-center">メインの釣果</th>
-            <td><%= f.collection_select :species_id, Species.all, :id, :name %> <%= f.number_field :catch_number, min: 1, class: "w-25" %>匹</td>
-          </tr>
-          <tr>
-            <th class="text-center">釣法</th>
-            <td><%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name %></td>
-          </tr>
-          <tr>
-            <th class="text-center">コメント</th>
-            <td><%= f.text_area :comment %></br>コメントの感情分析スコア<%= @post.score %></td>
-          </tr>
-          <tr>
-            <th class="text-center">公開設定</th>
-            <td><%= f.select :status, [["公開","true"], ["非公開","false"]] %></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td><%= f.submit "編集内容を保存", class: "btn btn-success btn-sm w-100" %></td>
-          </tr>
-        </table>
-      </div>
-    <% end %>
-  <% else %>
-    <div class="d-flex">
-      <div class="col-4">
-        <%= image_tag @post.get_post_image, height: "200" %>
-        <div class="tag-box">
-          <div class="text-dark mt-2">AIによるタグ付け</br>(クリックで削除)</div>
-          <% @post.image_tags.each do |image_tag| %>
-            <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
-          <% end %>
-        </div>
-      </div>
-      <table class="col-8 table table-borderless">
-        <tr>
-          <th class="text-center" sytle="width: 200px">投稿タイトル</th>
-          <td><%= @post.title %></td>
-        </tr>
-        <tr>
-          <th class="text-center" style="width: 200px">投稿ユーザー</th>
-          <td>
-            <div><%= link_to "#{@post.user.name}さん", user_path(@post.user_id) %></div>
-            <div class="text-right">
-              <% if user_signed_in? %>
-                <% if current_user.following?(@post.user) %>
-                  <%= link_to "フォロー外す", user_relationships_path(@post.user.id), class: "btn btn-danger btn-sm", method: :delete %>
-                <% else %>
-                  <%= link_to "フォローする", user_relationships_path(@post.user.id), class: "btn btn-primary btn-sm", method: :post %>
-                <% end %>
-              <% end %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th class="text-center">釣行日・時間帯</th>
-          <td><%= @post.date %> <%= @post.time_zone.time_zone %></td>
-        </tr>
-        <tr>
-          <th class="text-center">釣り場</th>
-          <td><%= @post.area.name %></td>
-        </tr>
-        <tr>
-          <th class="text-center">メインの釣果</th>
-          <td><%= @post.species.name %> <%= @post.catch_number %>匹</td>
-        </tr>
-        <tr>
-          <th class="text-center">釣法</th>
-          <td><%= @post.fishing_method.name %></td>
-        </tr>
-        <tr>
-          <th class="text-center">投稿者のコメント</th>
-          <td><%= @post.comment %></br>コメントの感情分析スコア<%= @post.score %></td>
-        </tr>
-      </table>
-    </div>
-  <% end %>
-
-  <div class="col-8 offset-4">
-    <div>
-      <div class="text-center mb-2">コメント件数：<%= @post.comments.count %></div>
-      <div class="border-bottom"></div>
-      <% @post.comments.each do |comment| %>
-        <div><%= comment.user.name %>さん</div>
-        <div class="mx-3"><%= comment.comment %></div>
-        <div class="text-right border-bottom"><%= comment.created_at.strftime('%Y/%m/%d') %></div>
-      <% end %>
-    </div>
-    <div>
-      <% if user_signed_in? %>
-        <%= form_with model: [@post, @comment] do |f| %>
-          <div><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-75" %></div>
-          <div><%= f.submit "送信", class: "btn btn-success mb-3 w-50" %></div>
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <!-- 投稿された画像を表示する -->
+      <%= image_tag @post.get_post_image, height: "400", class: "mx-auto d-block py-4" %>
+      <!-- Natural Language APIで作成したタグを表示 -->
+      <div class="tag-box text-center mb-3">
+        <div class="text-dark mt-2 text-center">AIによるタグ付け</div>
+        <!-- 投稿の画像に付いているタグを全て表示 -->
+        <% @post.image_tags.each do |image_tag| %>
+          <span><a class="btn btn-outline-dark btn-sm mt-2"><%= image_tag.name %></a></span>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
+</section>
+<!-- セクション -->
+<section class="bg-light">
+  <div class="row">
+    <table class="col-lg-8 offset-lg-2 table">
+      <tr>
+        <th class="text-center" sytle="width: 200px">投稿タイトル</th>
+        <td>
+          <%= @post.title %>
+          <!-- 投稿をブックマークするボタンを表示 -->
+          <!-- ログインしていない場合ボタンは表示しない -->
+          <% if user_signed_in? %>
+            <!-- 既にブックマークしている場合はブックマークを外すボタンを表示 -->
+            <% if @post.bookmarked_by?(current_user) %>
+              <%= link_to "ブックマークを外す", post_bookmark_path(@post), class: "btn btn-outline-danger btn-sm text-right", method: :delete %>
+            <!-- まだブックマークしていない場合はブックマークするボタンを表示 -->
+            <% else %>
+              <%= link_to "投稿をブックマーク", post_bookmarks_path(@post), class: "btn btn-outline-primary btn-sm text-right", method: :post %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="text-center" style="width: 200px">投稿ユーザー</th>
+        <td>
+          <!-- 投稿ユーザー名 -->
+          <div><%= @post.user.name %>さん
+            <!-- ログインしている場合フォローボタンを表示 -->
+            <% if user_signed_in? %>
+              <!-- 投稿ユーザーとログインユーザーが一致しない場合フォローボタンを表示 -->
+              <% if current_user.id != @post.user_id %>
+                <!-- 未フォローの場合はフォローする、既にフォローしている場合はフォローを外す -->
+                <% if current_user.following?(@post.user) %>
+                  <%= link_to "フォロー外す", user_relationships_path(@post.user.id), class: "btn btn-outline-danger btn-sm", method: :delete %>
+                <% else %>
+                  <%= link_to "フォローする", user_relationships_path(@post.user.id), class: "btn btn-outline-primary btn-sm", method: :post %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+      <!-- 釣行日および時間帯 -->
+      <tr>
+        <th class="text-center">釣行日・時間帯</th>
+        <td><%= @post.date %> <%= @post.time_zone.time_zone %></td>
+      </tr>
+      <!-- 釣り場 -->
+      <tr>
+        <th class="text-center">釣り場</th>
+        <td><%= @post.area.name %></td>
+      </tr>
+      <!-- 釣果 -->
+      <tr>
+        <th class="text-center">メインの釣果</th>
+        <td><%= @post.species.name %> <%= @post.catch_number %>匹</td>
+      </tr>
+      <!-- 釣法 -->
+      <tr>
+        <th class="text-center">釣法</th>
+        <td><%= @post.fishing_method.name %></td>
+      </tr>
+      <!-- 投稿コメント -->
+      <tr>
+        <th class="text-center">コメント</th>
+        <td><%= @post.comment %></td>
+      </tr>
+    </table>
+    <!-- 投稿に対するコメント -->
+    <div class="col-12 col-lg-6 offset-lg-3">
+      <!-- 投稿に対するコメントの一覧を表示 -->
+      <div>
+        <!-- 投稿に対して付いているコメントの件数を表示 -->
+        <div class="text-center my-2 border-bottom">コメント件数：<%= @post.comments.count %></div>
+        <!-- コメントの一覧を表示 -->
+        <% @post.comments.each do |comment| %>
+          <!-- コメントをした人の名前 -->
+          <div class="px-4"><%= comment.user.name %>さん</div>
+          <!-- コメントの内容 -->
+          <div class="px-4 mx-3"><%= comment.comment %></div>
+          <!-- コメントの投稿日 -->
+          <div class="text-right border-bottom px-4"><%= comment.created_at.strftime('%Y/%m/%d') %></div>
+        <% end %>
+      </div>
+      <!-- 投稿に対するコメントを投稿するフォームを表示 -->
+      <div>
+        <!-- ログインしていない場合は入力フォームを表示しない -->
+        <% if user_signed_in? %>
+          <%= form_with model: [@post, @comment] do |f| %>
+            <!-- コメント入力フォーム -->
+            <div class="text-center px-3"><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-100" %></div>
+            <!-- 投稿ボタン -->
+            <div class="text-center px-3"><%= f.submit "送信", class: "btn btn-success mb-3 w-100" %></div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

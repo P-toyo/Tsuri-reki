@@ -1,22 +1,32 @@
-<div class="col-2 border"></div>
-<div class="col-8 border px-5">
-  <h2 class="text-center my-4">ログイン(管理者用)</h2>
-  <%= form_with model: @admin, url: admin_session_path, id: "new_admin", class: "new_admin" do |f| %>
-    <table class="table table-borderless">
-      <tr>
-        <th class="text-center" style="width: 200px">メールアドレス</th>
-        <td><%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-100" %></td>
-      </tr>
-      <tr>
-        <th class="text-center" style="width: 200px">パスワード</th>
-        <td><%= f.password_field :password, autocomplete: "current-password" %></td>
-      </tr>
-      <tr>
-        <th></th>
-        <td><%= f.check_box :remember_me %>　記憶する</td>
-      </tr>
-    </table>
-    <div class="text-center my-4"><%= f.submit "ログイン", class: "btn btn-success w-50" %></div>
-  <% end %>
-</div>
-<div class="col-2 border"></div>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">ログイン(管理者用)</h2>
+    </div>
+  </div>
+</header>
+<!-- セクション -->
+<section class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <!-- ログインフォーム -->
+        <div class="card card-container my-5">
+          <%= form_with model: @admin, url: admin_session_path, id: "new_admin", class: "new_user m-5" do |f| %>
+            <!-- メールアドレス入力部 -->
+            <%= f.label :email, "メールアドレス", class: "m-0 text-dark" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-1" %>
+            <!-- パスワード入力部 -->
+            <%= f.label :password, "パスワード", class: "m-0 text-dark" %>
+            <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+            <!-- ログイン情報を記憶 -->
+            <div class="my-2 text-dark"><%= f.check_box :remember_me %>　入力内容を記憶する</div>
+            <!-- ログインボタン -->
+            <%= f.submit "ログイン", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

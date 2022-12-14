@@ -1,0 +1,108 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">投稿編集</h2>
+    </div>
+  </div>
+</header>
+<!-- セクション -->
+<section class="bg-light">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 bg-white">
+      <!-- 投稿をブックマークするボタンを表示 -->
+      <div class="text-right">
+        <!-- ログインしていない場合ボタンは表示しない -->
+        <% if user_signed_in? %>
+          <!-- 既にブックマークしている場合はブックマークを外すボタンを表示 -->
+          <% if @post.bookmarked_by?(current_user) %>
+            <%= link_to "ブックマークを外す", post_bookmark_path(@post), class: "btn btn-outline-danger btn-sm mt-3 text-right", method: :delete %>
+          <!-- まだブックマークしていない場合はブックマークするボタンを表示 -->
+          <% else %>
+            <%= link_to "投稿をブックマーク", post_bookmarks_path(@post), class: "btn btn-outline-primary btn-sm mt-3 text-right", method: :post %>
+          <% end %>
+        <% end %>
+      </div>
+      <!-- 投稿された画像を表示する -->
+      <%= image_tag @post.get_post_image, height: "400", class: "mx-auto d-block py-4" %>
+      <!-- Natural Language APIで作成したタグを表示 -->
+      <div class="tag-box text-center mb-3">
+        <!-- ログインしていない場合とログインしている場合の分岐 -->
+        <% if user_signed_in? %>
+          <!-- ログインユーザーと投稿ユーザーが一致する場合タグを削除できる -->
+          <% if current_user.id == @post.user_id %>
+            <div class="text-dark mt-2">AIによるタグ付け(クリックで削除)</div>
+            <% @post.image_tags.each do |image_tag| %>
+              <span><%= link_to "#{image_tag.name}", image_tag_path(image_tag), class: "btn btn-outline-dark btn-sm mt-2", method: :delete, "data-confirm" => "本当に削除しますか？" %></span>
+            <% end %>
+          <!-- ログインユーザーと投稿ユーザーが不一致の場合タグを削除できない -->
+          <% else %>
+            <div class="text-dark mt-2">AIによるタグ付け</div>
+            <% @post.image_tags.each do |image_tag| %>
+              <span><a class="btn btn-outline-dark btn-sm mt-2"><%= image_tag.name %></a></span>
+            <% end %>
+          <% end %>
+        <!-- ログインしていない場合タグを削除できない -->
+        <% else %>
+          <div class="text-dark mt-2 text-center">AIによるタグ付け</div>
+          <% @post.image_tags.each do |image_tag| %>
+            <span><a class="btn btn-outline-dark btn-sm mt-2"><%= image_tag.name %></a></span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- セクション -->
+<section class="bg-light">
+  <%= form_with model: @post do |f| %>
+    <div class="row">
+      <table class="col-lg-8 offset-lg-2 table bg-white">
+        <tr>
+          <th class="text-center" sytle="width: 200px">投稿タイトル</th>
+          <td><%= f.text_field :title %></td>
+        </tr>
+        <tr>
+          <th class="text-center" style="width: 200px">投稿ユーザー</th>
+          <td>
+            <div><%= @post.user.name %>さん</div>
+          </td>
+        </tr>
+        <tr>
+          <th class="text-center">釣行日・時間帯</th>
+          <td><%= f.date_field :date %> <%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone %></td>
+        </tr>
+        <tr>
+          <th class="text-center">釣り場</th>
+          <td><%= f.collection_select :area_id, Area.all, :id, :name %></td>
+        </tr>
+        <tr>
+          <th class="text-center">メインの釣果</th>
+          <td><%= f.collection_select :species_id, Species.all, :id, :name %> <%= f.number_field :catch_number, min: 1, class: "w-25" %>匹</td>
+        </tr>
+        <tr>
+          <th class="text-center">釣法</th>
+          <td><%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name %></td>
+        </tr>
+        <tr>
+          <th class="text-center">コメント</th>
+          <td>
+            <div><%= f.text_area :comment %></div>
+            <% if @post.score <= -0.5 %>
+              <div class="text-danger">かなり否定的な表現の可能性があります</div>
+            <% else %>
+              <div class="text-success">正常</div>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th class="text-center">公開設定</th>
+          <td><%= f.select :status, [["公開","true"], ["非公開","false"]] %></td>
+        </tr>
+        <tr>
+          <td class="text-center" colspan="2"><%= f.submit "編集内容を保存", class: "btn btn-success btn-sm w-75" %></td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+</section>
