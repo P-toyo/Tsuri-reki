@@ -6,7 +6,7 @@
     </div>
   </div>
 </header>
-<!-- セクション -->
+<!-- 投稿画像についてを表示する部分 -->
 <section class="bg-light">
   <div class="row">
     <div class="col-lg-8 offset-lg-2">
@@ -23,7 +23,7 @@
     </div>
   </div>
 </section>
-<!-- セクション -->
+<!-- 投稿内容について表示する部分 -->
 <section class="bg-light">
   <div class="row">
     <table class="col-lg-8 offset-lg-2 table">
@@ -86,12 +86,12 @@
       </tr>
       <!-- 投稿コメント -->
       <tr>
-        <th class="text-center">コメント</th>
+        <th class="text-center">投稿者のコメント</th>
         <td><%= @post.comment %></td>
       </tr>
     </table>
     <!-- 投稿に対するコメント -->
-    <div class="col-12 col-lg-6 offset-lg-3">
+    <div class="col-12 col-lg-6 offset-lg-3 mb-3">
       <!-- 投稿に対するコメントの一覧を表示 -->
       <div>
         <!-- 投稿に対して付いているコメントの件数を表示 -->
@@ -114,7 +114,7 @@
             <!-- コメント入力フォーム -->
             <div class="text-center px-3"><%= f.text_area :comment, rows: "5", placeholder: "コメントを入力", class: "mt-3 w-100" %></div>
             <!-- 投稿ボタン -->
-            <div class="text-center px-3"><%= f.submit "送信", class: "btn btn-success mb-3 w-100" %></div>
+            <div class="text-center px-3"><%= f.submit "送信", class: "btn btn-success w-100" %></div>
           <% end %>
         <% end %>
       </div>

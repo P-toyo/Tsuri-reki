@@ -1,24 +1,32 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-
-<div class="col-8">
-  <h2 class="text-center">新規投稿</h2>
-  <h4 class="text-center">都道府県を選択してください</h4>
-  <div class="row">
-    <% @prefectures.each do |prefecture| %>
-      <div class="col-2 border p-0">
-        <div>
-          <div class="card text-center m-0">
-            <%= image_tag prefecture.get_prefecture_image(prefecture) %>
-            <div class="card-body m-auto p-0">
-              <p class="card-title m-auto font-weight-bold text-center">
-                <%= link_to "#{prefecture.name}", post_new_path(prefecture) %>
-              </p>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">新規投稿</h2>
+      <h4>投稿する釣行場所の都道府県を選択してください</h4>
+    </div>
+  </div>
+</header>
+<!-- 投稿先の都道府県を選択する部分 -->
+<section>
+  <div class="row bg-light py-5 px-3">
+    <div class="col-lg-10 offset-lg-1">
+      <div class="row">
+        <% @prefectures.each do |prefecture| %>
+          <div class="col-2 p-1">
+            <div>
+              <%= link_to post_new_path(prefecture) do %>
+                <div class="card text-center m-0 mouse-over">
+                  <%= image_tag prefecture.get_prefecture_image(prefecture), class: "card-img-top p-2" %>
+                  <div class="card-body m-auto p-0">
+                    <p class="card-title m-auto font-weight-bold text-center text-dark"><%= prefecture.name %></p>
+                  </div>
+                </div>
+              <% end %>
             </div>
           </div>
-        </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
-
-<%= render "layouts/sidebar_right" %>
+</section>

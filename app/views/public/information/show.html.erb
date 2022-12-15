@@ -1,0 +1,19 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">お知らせ</h2>
+    </div>
+  </div>
+</header>
+<!-- お知らせ表示部分 -->
+<section class="bg-light">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 bg-white my-3">
+      <!-- 投稿された画像を表示する -->
+      <%= image_tag @information.get_image, height: "400", class: "mx-auto d-block py-4 border my-3" %>
+      <h2 class="border-bottom text-center"><%= @information.title %></h2>
+      <p class="mx-4"><%= @information.body %></p>
+    </div>
+  </div>
+</section>
