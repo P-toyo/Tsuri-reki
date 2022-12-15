@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many   :area_ratings
   has_many   :records
   belongs_to :prefecture
-  has_many_attached :image
+  has_one_attached :image
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   def get_image
     if image.attached?
-      image[0]
+      image
     else
       "noimage.png"
     end
