@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     resources :prefectures, only: [:show]
     resources :regions, only: [:index]
     resources :information, only: [:index, :show]
-    resources :users, only: [:show, :update] do
+    resources :users, only: [:show, :edit, :update] do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
       get 'followers' => 'relationships#followers', as: 'followers'
