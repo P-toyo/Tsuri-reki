@@ -8,8 +8,8 @@ class Admin::SpeciesController < ApplicationController
   end
 
   def create
-    species = Species.new(species_params) #送られてきたデータを取得
-    species.save #データを保存
+    @species = Species.new(species_params) #送られてきたデータを取得
+    @species.save #データを保存
     redirect_to request.referer #魚種一覧画面に遷移
   end
 

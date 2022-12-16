@@ -8,8 +8,8 @@ class Admin::FishingMethodsController < ApplicationController
   end
 
   def create
-    fishing_method = FishingMethod.new(fishing_method_params) #送られてきたデータを取得
-    fishing_method.save #データを保存
+    @fishing_method = FishingMethod.new(fishing_method_params) #送られてきたデータを取得
+    @fishing_method.save #データを保存
     redirect_to request.referer
   end
 

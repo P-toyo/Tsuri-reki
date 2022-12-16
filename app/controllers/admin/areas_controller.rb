@@ -8,8 +8,8 @@ class Admin::AreasController < ApplicationController
   end
 
   def create
-    area = Area.new(area_params) #送られてきたデータを取得
-    area.save #データを保存
+    @area = Area.new(area_params) #送られてきたデータを取得
+    @area.save #データを保存
     redirect_to request.referer #釣り場一覧画面に遷移
   end
 
