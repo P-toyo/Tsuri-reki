@@ -28,7 +28,7 @@
             <%= f.collection_select :species_id, Species.all, :id, :name, { prompt: '選択してください' }, class: "form-control mb-1" %>
             <!-- メイン釣果の釣果数入力 -->
             <%= f.label :catch_number, "釣果数(メインの釣果)", class: "m-0 text-dark" %>
-            <%= f.number_field :catch_number, min: 1, class: "form-control mb-1" %>匹
+            <%= f.number_field :catch_number, min: 1, class: "form-control mb-1" %>
             <!-- その他釣果を入力 -->
             <%= f.label :catch_other, "その他の釣果", class: "m-0 text-dark" %>
             <%= f.text_field :catch_other, class: "form-control mb-1" %>
@@ -44,6 +44,8 @@
             <!-- 画像選択 -->
             <%= f.label :image, "画像をアップロード", class: "btn btn-outline-dark mb-4 w-100" %>
             <%= f.file_field :image, class: "d-none" %>
+            <!-- 都道府県のIDを受け渡し -->
+            <%= f.hidden_field :prefecture_id, :value => @prefecture_id %>
             <!-- 投稿ボタン -->
             <%= f.submit "投稿", class: "btn btn-lg btn-outline-dark btn-block mb-2 mt-4" %>
           <% end %>

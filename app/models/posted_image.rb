@@ -1,2 +1,0 @@
-class PostedImage < ApplicationRecord
-end

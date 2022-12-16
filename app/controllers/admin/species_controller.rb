@@ -3,7 +3,7 @@ class Admin::SpeciesController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @species = Species.all #全ての魚種データを取得
+    @species = Species.all.page(params[:page]).per(15) #全ての魚種データを取得
     @new_species = Species.new #新規登録用のデータを取得
   end
 

@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+
+  validates :species_id, :user_id, :area_id, :fishing_method_id, :date, :time_zone_id, :catch_number, :comment, :title, presence: true
+
   belongs_to :user
   belongs_to :area
   belongs_to :species

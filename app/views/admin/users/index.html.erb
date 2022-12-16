@@ -1,12 +1,50 @@
-<div class="col-8 offset-2">
-  <% @users.each do |user| %>
-    <div>
-      <%= form_with model: user, url: admin_user_path(user) do |f| %>
-        <%= link_to "#{user.name}", admin_user_path(user) %>
-        <%= f.select :is_deleted, [["有効","false"], ["退会","true"]] %>
-        <%= f.submit "退会ステータスを保存", class: "btn btn-success btn-sm" %>
-      <% end %>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">ユーザー一覧</h2>
     </div>
-  <% end %>
-  <%= link_to "戻る", admin_root_path %>
-</div>
+  </div>
+</header>
+<!-- ユーザーの一覧を表示 -->
+<section class="bg-light">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <%= render "admin/homes/sidebar" %>
+      <div class="col-10 px-4">
+        <table class="table my-3">
+          <tr>
+            <th>登録日</th>
+            <th>ユーザー名</th>
+            <th>投稿件数</th>
+            <th>フォロー数</th>
+            <th>フォロワー数</th>
+            <th>退会ステータス</th>
+            <th></th>
+          </tr>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= user.name %></td>
+              <td><%= user.posts.count %>件</td>
+              <td><%= user.followings.count %>人</td>
+              <td><%= user.followers.count %>人</td>
+              <td><%= user.is_deleted %></td>
+              <td>
+                <% if user.is_deleted %>
+                  <%= link_to "切り替え", admin_user_path(user, is_deleted: false), class: "btn btn-danger", method: :put %>
+                <% else %>
+                  <%= link_to "切り替え", admin_user_path(user, is_deleted: true), class: "btn btn-success", method: :put %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <!-- ページネーションのページ選択 -->
+      <div class="text-center mx-auto mb-2"><%= paginate @users %></div>
+    </div>
+  </div>
+</section>

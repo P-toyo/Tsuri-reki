@@ -12,4 +12,18 @@ class Public::AreasController < ApplicationController
       @catch_number << @area.posts.where(species_id: species_id).sum(:catch_number)
     end
   end
+
+  def update
+    area = Area.find(params[:id])
+    area.update(area_params)
+    redirect_to request.referer
+  end
+
+
+  private
+
+  def user_params
+    params.require(:area).permit(:image)
+  end
+
 end
