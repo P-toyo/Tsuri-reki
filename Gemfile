@@ -78,3 +78,5 @@ gem "chartkick"
 gem 'kaminari'
 
 gem 'figaro'
+
+gem 'groupdate'

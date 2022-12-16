@@ -1,0 +1,36 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">お知らせ一覧</h2>
+    </div>
+  </div>
+</header>
+<!-- お知らせの一覧を表示 -->
+<section class="bg-light">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <%= render "admin/homes/sidebar" %>
+      <div class="col-10 px-4">
+        <table class="table mt-3 mb-0">
+          <tr>
+            <th>登録日</th>
+            <th>タイトル</th>
+            <th><%= link_to "追加", new_admin_information_path, class: "btn btn-outline-success" %></th>
+          </tr>
+          <% @information.each do |information| %>
+            <tr>
+              <td><%= information.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= information.title %></td>
+              <td><%= link_to "削除", admin_information_path(information), method: :delete, class: "btn btn-outline-danger", "data-confirm" => "本当に削除しますか？" %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <!-- ページネーションのページ選択 -->
+      <div class="text-center mx-auto mb-2"><%= paginate @information %></div>
+    </div>
+  </div>
+</section>

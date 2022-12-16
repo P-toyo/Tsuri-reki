@@ -8,7 +8,6 @@
     <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
         <!-- 共通のナビゲーションバー -->
-        <li class="nav-item"><%= link_to "About", root_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "投稿一覧", posts_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "釣り場一覧", regions_path, class: "nav-link" %></li>
         <% if user_signed_in? %>
@@ -25,15 +24,6 @@
           <li class="nav-item"><%= link_to "ログイン", new_user_session_path, class: "nav-link" %></li>
           <li class="nav-item"><%= link_to "新規登録", new_user_registration_path, class: "nav-link" %></li>
         <% end %>
-        <!-- 投稿タイトルで検索を行うためのフォーム -->
-        <li class="nav-item d-flex align-items-center mx-auto">
-          <div class="input-group">
-            <%= form_tag posts_path, class: "d-flex", method: :get do %>
-              <%= text_field_tag :search, placeholder="タイトルで検索", class: "form-control-sm input-group-prepend" %>
-              <span class="input-group-btn"><%= submit_tag "検索", :title => nil, class: "btn btn-outline-light btn-sm" %></span>
-            <% end %>
-          </div>
-        </li>
       </ul>
     </div>
   </div>

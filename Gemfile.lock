@@ -99,6 +99,8 @@ GEM
       thor (>= 0.14.0, < 2)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    groupdate (6.1.0)
+      activesupport (>= 5.2)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.5)
@@ -262,6 +264,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   figaro
+  groupdate
   jbuilder (~> 2.7)
   jquery-rails
   kaminari

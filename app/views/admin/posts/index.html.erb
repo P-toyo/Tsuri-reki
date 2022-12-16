@@ -1,6 +1,40 @@
-<div class="col-8 offset-2">
-  <% @posts.each do |post| %>
-    <div><%= link_to "#{post.title}", admin_post_path(post) %></div>
-  <% end %>
-  <%= link_to "戻る", admin_root_path %>
-</div>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">投稿一覧</h2>
+    </div>
+  </div>
+</header>
+<!-- 投稿の一覧を表示 -->
+<section class="bg-light">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <%= render "admin/homes/sidebar" %>
+      <div class="col-10 px-4">
+        <table class="table my-3">
+          <tr>
+            <th>投稿日</th>
+            <th>ユーザー名</th>
+            <th>投稿タイトル</th>
+            <th>コメント数</th>
+            <th></th>
+          </tr>
+          <% @posts.each do |post| %>
+            <tr>
+              <td><%= post.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= post.user.name %></td>
+              <td><%= link_to "#{post.title}", admin_post_path(post), class: "text-dark " %></td>
+              <td><%= post.comments.count %>件</td>
+              <td><%= link_to "投稿を削除", admin_post_path(post), class: "btn btn-danger btn-sm", method: :delete, "data-confirm" => "本当に削除しますか？" %></td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <!-- ページネーションのページ選択 -->
+      <div class="text-center mx-auto mb-2"><%= paginate @posts %></div>
+    </div>
+  </div>
+</section>

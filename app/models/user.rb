@@ -1,15 +1,15 @@
 class User < ApplicationRecord
-  has_many   :posts
-  has_many   :bookmarks
+  has_many   :posts, dependent: :destroy
+  has_many   :bookmarks, dependent: :destroy
   has_many   :comments, dependent: :destroy
   has_many   :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many   :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  has_many   :followings, through: :relationships, source: :followed
-  has_many   :followers, through: :reverse_of_relationships, source: :follower
-  has_many   :area_ratings
-  has_many   :records
+  has_many   :followings, through: :relationships, source: :followed, dependent: :destroy
+  has_many   :followers, through: :reverse_of_relationships, source: :follower, dependent: :destroy
+  has_many   :area_ratings, dependent: :destroy
+  has_many   :records, dependent: :destroy
   belongs_to :prefecture
-  has_many_attached :image
+  has_one_attached :image
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
   def get_image
     if image.attached?
-      image[0]
+      image
     else
       "noimage.png"
     end

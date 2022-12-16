@@ -1,0 +1,43 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">魚種一覧</h2>
+    </div>
+  </div>
+</header>
+<!-- 釣法の一覧を表示 -->
+<section class="bg-light">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <%= render "admin/homes/sidebar" %>
+      <div class="col-10 px-4">
+        <table class="table mt-3 mb-0">
+          <tr>
+            <th>登録日</th>
+            <th>名前</th>
+            <th>投稿された回数</th>
+            <th></th>
+          </tr>
+          <% @fishing_methods.each do |fishing_method| %>
+            <tr>
+              <td><%= fishing_method.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= fishing_method.name %></td>
+              <td><%= fishing_method.posts.count %>件</td>
+              <td><%= link_to "削除", admin_fishing_method_path(fishing_method), method: :delete, class: "btn btn-outline-danger", "data-confirm" => "本当に削除しますか？" %></td>
+            </tr>
+          <% end %>
+        </table>
+        <%= form_with model: @new_fishing_method, url: admin_fishing_methods_path, class: "d-flex align-items-center mx-2", method: :post do |f| %>
+          <%= f.label :name, "釣法を追加する" %>
+          <%= f.text_field :name, class: "form_control" %>
+          <%= f.submit "追加", class: "btn btn-outline-dark btn-sm" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <!-- ページネーションのページ選択 -->
+      <div class="text-center mx-auto mb-2"><%= paginate @fishing_methods %></div>
+    </div>
+  </div>
+</section>

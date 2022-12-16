@@ -1,35 +1,18 @@
-<div class="col-4 offset-2">
-  <h4>投稿一覧</h4>
-  <% @posts.each do |post| %>
-    <div><%= link_to "#{post.title}", admin_post_path(post) %></div>
-  <% end %>
-  <div class="text-right"><%= link_to "全て見る>>", admin_posts_path %></div>
-</div>
-<div class="col-4">
-  <h4>ユーザー一覧</h4>
-  <% @users.each do |user| %>
-    <div><%= link_to "#{user.name}", admin_user_path(user) %></div>
-  <% end %>
-  <div class="text-right"><%= link_to "全て見る>>", admin_users_path %></div>
-</div>
-<div class="col-4 offset-2">
-  <h4>魚種一覧</h4>
-  <% @species.each do |species| %>
-    <div><%= species.name %></div>
-  <% end %>
-  <div class="text-right"><%= link_to "全て見る>>", admin_species_index_path %></div>
-</div>
-<div class="col-4">
-  <h4>釣法一覧</h4>
-  <% @fishing_method.each do |fishing_method| %>
-    <div><%= fishing_method.name %></div>
-  <% end %>
-  <div class="text-right"><%= link_to "全て見る>>", admin_fishing_method_index_path %></div>
-</div>
-<div class="col-4 offset-2">
-  <h4>釣り場一覧</h4>
-  <% @areas.each do |area| %>
-    <div><%= area.name %></div>
-  <% end %>
-  <div class="text-right"><%= link_to "全て見る>>", admin_areas_path %></div>
-</div>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">管理画面</h2>
+    </div>
+  </div>
+</header>
+<!-- セクション -->
+<section class="bg-light">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <%= render "admin/homes/sidebar" %>
+      <div class="col-10 border p-0">
+      </div>
+    </div>
+  </div>
+</section>

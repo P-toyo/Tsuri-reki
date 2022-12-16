@@ -1,0 +1,220 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <!-- 自分のページとその他の人のページでヘッダーを変更 -->
+      <% if current_user.id == @user.id %>
+        <h2 class="fw-bolder">プロフィール・その他編集</h2>
+      <% else %>
+        <h2 class="fw-bolder"><%= @user.name %>さんのページ</h2>
+      <% end %>
+    </div>
+  </div>
+</header>
+<!-- プロフィールを変更する部分 -->
+<section>
+  <div class="col-lg-8 offset-lg-2 my-3">
+    <!-- プロフィール編集フォームの表示 -->
+    <%= form_with model: @user, class: "row my-2", local: true do |f| %>
+      <div class="col-4 text-center my-auto">
+        <!-- 現在のプロフィール画像を表示 -->
+        <%= image_tag @user.get_image, class: "align-items-center border", height: "200" %>
+        <!-- 画像をアップロードボタンを表示 -->
+        <%= f.label :image, "画像をアップロード", class: "btn btn-outline-dark m-0", style: "width: 200px" %>
+        <!-- 元のフォームは非表示 -->
+        <%= f.file_field :image, class: "d-none" %>
+      </div>
+      <div class="col-8">
+        <!-- ハンドルネーム入力部 -->
+        <%= f.label :name, "ハンドルネーム", class: "m-0 text-dark" %>
+        <%= f.text_field :name, autofocus: true, class: "form-control mb-1" %>
+        <!-- メールアドレス入力部 -->
+        <%= f.label :email, "メールアドレス", class: "m-0 text-dark" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control mb-1", placeholder: "メールアドレス" %>
+        <!-- 活動拠点選択部 -->
+        <%= f.label :prefecture_id, "活動拠点", class: "m-0 text-dark" %>
+        <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '選択してください' }, class: "form-control mb-3" %>
+        <!-- 選択内容保存ボタン -->
+        <%= f.submit "プロフィールを更新", class: "btn btn-outline-dark btn-block mb-2" %>
+      </div>
+    <% end %>
+  </div>
+</section>
+<!-- その他の編集を行う部分 -->
+<section>
+  <div class="col-lg-8 offset-lg-2 my-3">
+    <div class="row">
+      <!-- ユーザーの情報をタブで表示 -->
+      <div class="col-12 mx-auto">
+        <ul class="nav nav-tabs justify-content-center">
+          <!-- 投稿一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-a" data-toggle="tab" class="nav-link text-center text-dark active">投稿</br><%= @user.posts.count %>件</a>
+          </li>
+          <!-- ブックマーク一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-b" data-toggle="tab" class="nav-link text-center text-dark">ブックマーク</br><%= @user.bookmarks.count %>件</a>
+          </li>
+          <!-- フォロー一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-c" data-toggle="tab" class="nav-link text-center text-dark">フォロー</br><%= @user.followings.count %>人</a>
+          </li>
+          <!-- フォロワー一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-d" data-toggle="tab" class="nav-link text-center text-dark">フォロワー</br><%= @user.followers.count %>人</a>
+          </li>
+          <!-- 釣果メモのタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-e" data-toggle="tab" class="nav-link text-center text-dark">釣果メモ</br><%= @user.records.count %>件</a>
+          </li>
+        </ul>
+      </div>
+      <!-- タブの中身を設定 -->
+      <div class="col-12 tab-content">
+        <!-- 投稿一覧のタブ -->
+        <div id="tab-a" class="tab-pane active text-center">
+          <!-- 投稿が存在しているかで分岐 -->
+          <% if @user.posts.exists? %>
+            <!-- 表示する項目のラベル -->
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-25">投稿日</spam>
+              <spam class="w-50">投稿タイトル</spam>
+              <spam class="" style="width: 25%">公開設定</spam>
+            </p>
+            <!-- 投稿の一覧を表示 -->
+            <% @user.posts.each do |post| %>
+              <%= form_with model: post do |f| %>
+                <p class="d-flex align-items-center">
+                  <!-- 投稿日 -->
+                  <spam class="w-25"><%= post.date %></spam>
+                  <!-- 投稿タイトル -->
+                  <spam class="w-50"><%= link_to "#{post.title}", post_path(post), class: "text-dark" %></spam>
+                  <!-- 公開非公開選択タブ -->
+                  <spam class="" style="width: 15%"><%= f.select :status, [["公開","true"], ["非公開","false"]], { prompt: '選択してください' }, class: "form-control" %></spam>
+                  <!-- 変更ボタン -->
+                  <spam class="" style="width: 10%"><%= f.submit "変更", class: "btn btn-outline-dark my-auto" %></spam>
+                </p>
+              <% end %>
+            <% end %>
+          <% else %>
+            <!-- 投稿が一件もない場合は表示 -->
+            <p class="text-center mt-3">投稿がありません</p>
+          <% end %>
+        </div>
+        <!-- ブックマーク一覧のタブ -->
+        <div id="tab-b" class="tab-pane text-center">
+          <!-- ブックマークが存在しているかで分岐 -->
+          <% if @user.bookmarks.exists? %>
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-25">投稿日</spam>
+              <spam class="w-50">投稿タイトル</spam>
+              <spam class="w-25">ブックマーク</spam>
+            </p>
+            <!-- ブックマークした投稿の一覧を表示 -->
+            <% @user.bookmarks.each do |bookmark| %>
+              <p class="d-flex align-items-center">
+                <!-- ブックマークした投稿の投稿日 -->
+                <spam class="w-25"><%= bookmark.post.date %></spam>
+                <!-- ブックマークした投稿のタイトル -->
+                <spam class="w-50"><%= link_to "#{bookmark.post.title}", post_path(bookmark.post), class: "text-dark" %></spam>
+                <!-- ブックマークを外すボタン -->
+                <spam class="w-25"><%= link_to "解除", post_bookmark_path(bookmark.post), class: "btn btn-outline-danger text-right", method: :delete, "data-confirm" => "本当にブックマークを解除しますか？" %></spam>
+              </p>
+            <% end %>
+          <!-- ブックマークした投稿がなければそのことを表示 -->
+          <% else %>
+            <p class="text-center mt-3">ブックマークした投稿はありません</p>
+          <% end %>
+        </div>
+        <!-- フォロー一覧のタブ -->
+        <div id="tab-c" class="tab-pane text-center">
+          <!-- フォローした人がいるかいないかで分岐 -->
+          <% if @user.followings.exists? %>
+            <!-- 表示する項目のラベル -->
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-50">ユーザー名</spam>
+              <spam class="w-50">フォロー</spam>
+            </p>
+            <!-- フォローしている人の一覧を表示 -->
+            <% @user.followings.each do |following| %>
+              <p class="d-flex align-items-center">
+                <!-- フォローしている人の名前とその人のページへのリンク -->
+                <spam class="w-50"><%= link_to "#{following.name}", user_path(following), class: "text-dark" %></spam>
+                <!-- フォローを外すボタン -->
+                <spam class="w-50"><%= link_to "フォローを外す", user_relationships_path(following), class: "btn btn-outline-danger", method: :delete %></spam>
+              </p>
+            <% end %>
+          <!-- フォローしているユーザーがいない場合はそのことを表示 -->
+          <% else %>
+            <p class="text-center mt-3">フォローしているユーザーはいません</p>
+          <% end %>
+        </div>
+        <!-- フォロワー一覧のタブ -->
+        <div id="tab-d" class="tab-pane text-center">
+          <!-- フォロワーがいるかいないかで分岐 -->
+          <% if @user.followers.exists? %>
+            <!-- 表示する項目のラベル -->
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-100">ユーザー名</spam>
+            </p>
+            <!-- フォロワーがいるかいないかで分岐 -->
+            <% @user.followers.each do |follower| %>
+              <p class="d-flex align-items-center">
+                <!-- フォロワーの名前とそのフォロワーのページへのリンク -->
+                <spam class="w-100"><%= link_to "#{follower.name}", user_path(follower) %></spam>
+              </p>
+            <% end %>
+            <!-- フォロワーが居ない場合はそのことを表示 -->
+          <% else %>
+            <p class="text-center mt-3">フォロワーはいません</p>
+          <% end %>
+        </div>
+        <!-- 釣果メモのタブ -->
+        <div id="tab-e" class="tab-pane text-center">
+          <!-- 釣果記録があるかないかで分岐 -->
+          <% if @user.records.exists? %>
+            <!-- 表示する項目のラベル -->
+            <div class="d-flex align-items-center mt-3 text-center">
+              <div class="m-0 text-dark text-center w-25">魚種</div>
+              <div class="m-0 text-dark text-center w-25">合計数</div>
+              <div class="m-0 text-dark text-center w-25">最大サイズ</div>
+              <div class="m-0 w-25"></div>
+            </div>
+            <!-- 今までの記録の一覧を表示 -->
+            <% @user.records.each do |record| %>
+              <!-- 今までの記録を編集するフォームを表示 -->
+              <%= form_with model: record, class: "d-flex align-items-center mt-3", local: true do |f| %>
+                <!-- 魚種を選択 -->
+                <%= f.collection_select :species_id, Species.all, :id, :name, { prompt: '選択してください' }, class: "form-control w-25", include_blank: "魚種" %>
+                <!-- 合計数を入力 -->
+                <%= f.number_field :catch_number, min: 1, class: "form-control w-25", placeholder: "合計数" %>
+                <!-- 最大サイズを入力 -->
+                <%= f.number_field :size, min: 1, class: "form-control w-25", placeholder: "最大サイズ" %>
+                <!-- 更新ボタンを表示 -->
+                <%= f.submit "更新", class: "btn btn-outline-dark ml-2", style: "width: 12%" %>
+                <!-- スキマを作る -->
+                <div style="width: 1%"></div>
+                <!-- 削除ボタンを表示 -->
+                <%= link_to "削除", record_path(record), class: "btn btn-outline-danger", style: "width: 12%", method: :delete, "data-confirm" => "本当に削除しますか？" %>
+              <% end %>
+            <% end %>
+            <!-- 新たな記録を追加するフォームを表示 -->
+            <%= form_with model: @record, class: "d-flex align-items-center mt-3", local: true do |f| %>
+              <!-- 魚種を選択 -->
+              <%= f.collection_select :species_id, Species.all, :id, :name, { prompt: '選択してください' }, class: "form-control w-25", include_blank: "魚種" %>
+              <!-- 合計数を入力 -->
+              <%= f.number_field :catch_number, min: 1, class: "form-control w-25", placeholder: "合計数" %>
+              <!-- 最大サイズを入力 -->
+              <%= f.number_field :size, min: 1, class: "form-control w-25", placeholder: "最大サイズ" %>
+              <!-- 追加ボタンを表示 -->
+              <%= f.submit "追加", class: "btn btn-outline-dark ml-2", style: "width: 25%" %>
+            <% end %>
+          <!-- 釣果記録がない場合は記録がないと表示 -->
+          <% else %>
+            <p class="text-center mt-3">記録がありません</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,44 +1,56 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-<div class="col-8 border px-5">
-  <%= form_with model: @post, local: true do |f| %>
-    <h2 class="text-center my-4">新規投稿</h2>
-    <table class="table table-borderless">
-      <tr>
-        <th class="text-center" style="width: 200px">釣行日・時間帯</th>
-        <td><%= f.date_field :date, class: "w-100"  %></td>
-        <td><%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone, include_blank: "選択して下さい" %></td>
-      </tr>
-      <tr>
-        <th class="text-center" style="width: 200px">釣行場所</th>
-        <td><%= f.collection_select :area_id, Area.where(prefecture_id: @prefecture_id), :id, :name, include_blank: "選択して下さい" %></td>
-      </tr>
-      <tr>
-        <th class="text-center">メインの釣果</th>
-        <td><%= f.collection_select :species_id, Species.all, :id, :name, include_blank: "選択して下さい" %></td>
-        <td><%= f.number_field :catch_number, min: 1, class: "w-25" %>匹</td>
-      </tr>
-      <tr>
-        <th class="text-center">その他釣果</th>
-        <td><%= f.text_field :catch_other, class: "w-100" %></td>
-      </tr>
-      <tr>
-        <th class="text-center">釣法</th>
-        <td><%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name, include_blank: "選択して下さい" %></td>
-      </tr>
-      <tr>
-        <th class="text-center">タイトル</th>
-        <td><%= f.text_field :title, class: "w-100" %></td>
-      </tr>
-      <tr>
-        <th class="text-center">画像</th>
-        <td><%= f.file_field :image, class: "w-100" %></td>
-      </tr>
-      <tr>
-        <th class="text-center">コメント</th>
-        <td><%= f.text_area :comment, class: "w-100" %></td>
-      </tr>
-    </table>
-    <div class="text-center my-4"><%= f.submit "投稿", class: "btn btn-success w-50" %></div>
-  <% end %>
-</div>
-<%= render "layouts/sidebar_right" %>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">新規投稿</h2>
+    </div>
+  </div>
+</header>
+<!-- 新規投稿入力部 -->
+<section class="bg-light">
+  <div class="container-fluid px-lg-5">
+    <div class="row">
+      <div class="col-12 col-lg-8 offset-lg-2 mb-5 mb-lg-0">
+        <!-- 投稿フォーム -->
+        <div class="card card-container my-5">
+          <%= form_with model: @post, class: "new_user m-5", local: true do |f| %>
+            <!-- 釣行日選択 -->
+            <%= f.label :date, "釣行日", class: "m-0 text-dark" %>
+            <%= f.date_field :date, class: "form-control mb-1" %>
+            <!-- 釣行時間帯選択 -->
+            <%= f.label :time_zone_id, "釣行時間帯", class: "m-0 text-dark" %>
+            <%= f.collection_select :time_zone_id, TimeZone.all, :id, :time_zone, { prompt: '選択してください' }, class: "form-control mb-1" %>
+            <!-- 釣行場所選択 -->
+            <%= f.label :area_id, "釣行場所", class: "m-0 text-dark" %>
+            <%= f.collection_select :area_id, Area.where(prefecture_id: @prefecture_id), :id, :name, { prompt: '選択してください' }, class: "form-control mb-1" %>
+            <!-- メイン釣果の魚種選択 -->
+            <%= f.label :species_id, "魚種(メインの釣果)", class: "m-0 text-dark" %>
+            <%= f.collection_select :species_id, Species.all, :id, :name, { prompt: '選択してください' }, class: "form-control mb-1" %>
+            <!-- メイン釣果の釣果数入力 -->
+            <%= f.label :catch_number, "釣果数(メインの釣果)", class: "m-0 text-dark" %>
+            <%= f.number_field :catch_number, min: 1, class: "form-control mb-1" %>
+            <!-- その他釣果を入力 -->
+            <%= f.label :catch_other, "その他の釣果", class: "m-0 text-dark" %>
+            <%= f.text_field :catch_other, class: "form-control mb-1" %>
+            <!-- 釣法選択 -->
+            <%= f.label :fishing_method_id, "釣法", class: "m-0 text-dark" %>
+            <%= f.collection_select :fishing_method_id, FishingMethod.all, :id, :name, { prompt: '選択してください' }, class: "form-control mb-1" %>
+            <!-- 投稿タイトル -->
+            <%= f.label :title, "投稿タイトル", class: "m-0 text-dark" %>
+            <%= f.text_field :title, class: "form-control mb-1" %>
+            <!-- 投稿コメント -->
+            <%= f.label :comment, "投稿コメント", class: "m-0 text-dark" %>
+            <%= f.text_area :comment, class: "form-control mb-4" %>
+            <!-- 画像選択 -->
+            <%= f.label :image, "画像をアップロード", class: "btn btn-outline-dark mb-4 w-100" %>
+            <%= f.file_field :image, class: "d-none" %>
+            <!-- 都道府県のIDを受け渡し -->
+            <%= f.hidden_field :prefecture_id, :value => @prefecture_id %>
+            <!-- 投稿ボタン -->
+            <%= f.submit "投稿", class: "btn btn-lg btn-outline-dark btn-block mb-2 mt-4" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

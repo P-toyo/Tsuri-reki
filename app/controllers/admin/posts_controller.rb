@@ -7,7 +7,7 @@ class Admin::PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all #全ての投稿データを取得
+    @posts = Post.all.page(params[:page]).per(15) #全ての投稿データを取得
   end
 
   def update

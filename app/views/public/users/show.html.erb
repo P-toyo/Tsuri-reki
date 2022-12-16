@@ -1,11 +1,186 @@
-<%= render "layouts/sidebar_left", posts: @sidebar_posts %>
-
-<div class="col-8 border">
-  <% if user_signed_in? && current_user.id != params[:id] %>
-    <%= render "public/users/current_user", user: @user %>
-  <% else %>
-    <%= render "public/users/other_user", user: @user %>
-  <% end %>
-</div>
-
-<%= render "layouts/sidebar_right" %>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <!-- 自分のページとその他の人のページでヘッダーを変更 -->
+      <% if current_user.id == @user.id %>
+        <h2 class="fw-bolder">マイページ</h2>
+      <% else %>
+        <h2 class="fw-bolder"><%= @user.name %>さんのページ</h2>
+      <% end %>
+    </div>
+  </div>
+</header>
+<!-- プロフィールを表示する部分 -->
+<section>
+  <div class="col-lg-8 offset-lg-2 my-3">
+    <div class="row">
+      <div class="col-4 text-center my-auto">
+        <!-- 現在のプロフィール画像を表示 -->
+        <%= image_tag @user.get_image, class: "align-items-center border", height: "200" %>
+      </div>
+      <div class="col-8">
+        <!-- ハンドルネームを表示 -->
+        <div>ハンドルネーム</div>
+        <div class="px-3 pb-1 border-bottom"><%= @user.name %></div>
+        <!-- 活動拠点選択部 -->
+        <div class="pt-1">活動拠点</div>
+        <div class="px-3 pb-1 border-bottom"><%= @user.prefecture.name %></div>
+        <!-- 投稿数を表示 -->
+        <div class="pt-1">投稿数</div>
+        <div class="px-3 pb-1 border-bottom"><%= @user.posts.count %>件</div>
+        <!-- 今までの釣果数を表示 -->
+        <div class="pt-1">今までの釣果数(釣果メモ合計値)</div>
+        <div class="px-3"><%= @user.records.sum(:catch_number) %>匹</div>
+      </div>
+    </div>
+    <% if current_user.id == @user.id %>
+      <div class="row"><%= link_to "プロフィールを編集する", edit_user_path(current_user), class: "btn btn-outline-dark mx-auto mt-3" %></div>
+    <% end %>
+  </div>
+</section>
+<!-- その他情報を表示する部分 -->
+<section>
+  <div class="col-lg-8 offset-lg-2 my-3">
+    <div class="row">
+      <!-- ユーザーの情報をタブで表示 -->
+      <div class="col-12 mx-auto">
+        <ul class="nav nav-tabs justify-content-center">
+          <!-- 投稿一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-a" data-toggle="tab" class="nav-link text-center text-dark active">投稿</br><%= @user.posts.count %>件</a>
+          </li>
+          <!-- ブックマーク一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-b" data-toggle="tab" class="nav-link text-center text-dark">ブックマーク</br><%= @user.bookmarks.count %>件</a>
+          </li>
+          <!-- フォロー一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-c" data-toggle="tab" class="nav-link text-center text-dark">フォロー</br><%= @user.followings.count %>人</a>
+          </li>
+          <!-- フォロワー一覧のタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-d" data-toggle="tab" class="nav-link text-center text-dark">フォロワー</br><%= @user.followers.count %>人</a>
+          </li>
+          <!-- 釣果メモのタブ -->
+          <li class="nav-item", style="width: 20%">
+            <a href="#tab-e" data-toggle="tab" class="nav-link text-center text-dark">釣果メモ</br><%= @user.records.count %>件</a>
+          </li>
+        </ul>
+      </div>
+      <!-- タブの中身を表示 -->
+      <div class="col-12 tab-content">
+        <!-- 投稿一覧のタブ -->
+        <div id="tab-a" class="tab-pane active text-center">
+          <!-- 投稿が存在しているかで分岐 -->
+          <% if @user.posts.exists? %>
+            <!-- 表示する項目のラベル -->
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-25">投稿日</spam>
+              <spam class="w-75">投稿タイトル</spam>
+            </p>
+            <!-- 投稿の一覧を表示 -->
+            <% @user.posts.each do |post| %>
+              <p class="d-flex align-items-center">
+                <!-- 投稿日 -->
+                <spam class="w-25"><%= post.date %></spam>
+                <!-- 投稿タイトル -->
+                <spam class="w-75"><%= link_to "#{post.title}", post_path(post), class: "text-dark" %></spam>
+              </p>
+            <% end %>
+          <% else %>
+            <!-- 投稿が一件もない場合は表示 -->
+            <p class="text-center mt-3">投稿がありません</p>
+          <% end %>
+        </div>
+        <!-- ブックマーク一覧のタブ -->
+        <div id="tab-b" class="tab-pane text-center">
+          <!-- ブックマークが存在しているかで分岐 -->
+          <% if @user.bookmarks.exists? %>
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-25">投稿日</spam>
+              <spam class="w-75">投稿タイトル</spam>
+            </p>
+            <!-- ブックマークした投稿の一覧を表示 -->
+            <% @user.bookmarks.each do |bookmark| %>
+              <p class="d-flex align-items-center">
+                <!-- ブックマークした投稿の投稿日 -->
+                <spam class="w-25"><%= bookmark.post.date %></spam>
+                <!-- ブックマークした投稿のタイトル -->
+                <spam class="w-75"><%= link_to "#{bookmark.post.title}", post_path(bookmark.post), class: "text-dark" %></spam>
+              </p>
+            <% end %>
+          <!-- ブックマークした投稿がなければそのことを表示 -->
+          <% else %>
+            <p class="text-center mt-3">ブックマークした投稿はありません</p>
+          <% end %>
+        </div>
+        <!-- フォロー一覧のタブ -->
+        <div id="tab-c" class="tab-pane text-center">
+          <!-- フォローした人がいるかいないかで分岐 -->
+          <% if @user.followings.exists? %>
+            <!-- 表示する項目のラベル -->
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-100">ユーザー名</spam>
+            </p>
+            <!-- フォローしている人の一覧を表示 -->
+            <% @user.followings.each do |following| %>
+              <p class="d-flex align-items-center mt-3">
+                <!-- フォローしている人の名前とその人のページへのリンク -->
+                <spam class="w-100"><%= link_to "#{following.name}", user_path(following), class: "text-dark" %></spam>
+              </p>
+            <% end %>
+          <!-- フォローしているユーザーがいない場合はそのことを表示 -->
+          <% else %>
+            <p class="text-center mt-3">フォローしているユーザーはいません</p>
+          <% end %>
+        </div>
+        <!-- フォロワー一覧のタブ -->
+        <div id="tab-d" class="tab-pane text-center">
+          <!-- フォロワーがいるかいないかで分岐 -->
+          <% if @user.followers.exists? %>
+            <!-- 表示する項目のラベル -->
+            <p class="d-flex align-items-center mt-3">
+              <spam class="w-100">ユーザー名</spam>
+            </p>
+            <!-- フォロワー一覧を表示 -->
+            <% @user.followers.each do |follower| %>
+              <p class="d-flex align-items-center mt-3">
+                <!-- フォロワーの名前とそのフォロワーのページへのリンク -->
+                <spam class="w-100"><%= link_to "#{follower.name}", user_path(follower), class: "text-dark" %></spam>
+              </p>
+            <% end %>
+          <!-- フォロワーがいない場合はそのことを表示 -->
+          <% else %>
+            <p class="text-center mt-3">フォロワーはいません</p>
+          <% end %>
+        </div>
+        <!-- 釣果メモのタブ -->
+        <div id="tab-e" class="tab-pane text-center">
+          <!-- 釣果記録があるかないかで分岐 -->
+          <% if @user.records.exists? %>
+            <!-- 表示する項目のラベル -->
+            <div class="d-flex align-items-center mt-3 text-center">
+              <div class="m-0 text-dark text-center w-50">魚種</div>
+              <div class="m-0 text-dark text-center w-25">合計数</div>
+              <div class="m-0 text-dark text-center w-25">最大サイズ</div>
+            </div>
+            <% @user.records.each do |record| %>
+              <p class="d-flex align-items-center mt-3">
+                <!-- 魚種を表示 -->
+                <spam class="w-50"><%= record.species.name %></spam>
+                <!-- 合計数を表示 -->
+                <spam class="w-25"><%= record.catch_number %></spam>
+                <!-- 最大サイズを表示 -->
+                <spam class="w-25"><%= record.size %></spam>
+              </p>
+            <% end %>
+          <!-- 釣果記録がない場合は記録がないと表示 -->
+          <% else %>
+            <p class="text-center mt-3">記録がありません</p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

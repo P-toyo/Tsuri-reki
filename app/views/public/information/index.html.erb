@@ -1,0 +1,35 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">お知らせ一覧</h2>
+    </div>
+  </div>
+</header>
+<!-- お知らせ一覧を表示する部分 -->
+<section class="py-5 border-bottom bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mb-5 mb-lg-0">
+        <!-- カードで運営からのお知らせを全件表示 -->
+        <div class="card text-center mx-5">
+          <h4 class="text-left mx-3 mt-3 mb-0 border-bottom text-dark">Information</h4>
+          <div class="card-body py-0">
+            <% @information.each do |information| %>
+              <div class="mouse-over text-dark">
+                <!-- お知らせ日時 -->
+                <p class="card-text text-left m-0 pt-2 text-dark"><%= information.created_at.strftime('%Y/%m/%d') %></p>
+                <!-- お知らせタイトル -->
+                <p class="card-title h5 font-weight-bold text-left mx-2 my-0"><u><%= link_to "#{information.title}", information_path(information), class: "text-dark" %></u></p>
+                <!-- お知らせ本文 -->
+                <p class="card-text text-left px-4 pb-2 border-bottom text-dark text-truncate"><%= information.body %></p>
+              </div>
+            <% end %>
+            <!-- お知らせ欄の下部にスキマを作る -->
+            <p class="text-right text-dark mr-3 mt-2"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
