@@ -10,8 +10,8 @@ class Admin::InformationController < ApplicationController
   end
 
   def create
-    information = Information.new(information_params) #送られてきたデータを取得
-    information.save #データを保存
+    @information = Information.new(information_params) #送られてきたデータを取得
+    @information.save #データを保存
     redirect_to admin_information_index_path #お知らせ一覧画面に遷移
   end
 
