@@ -1,16 +1,16 @@
-class Admin::FishingMethodController < ApplicationController
+class Admin::FishingMethodsController < ApplicationController
 
   before_action :authenticate_admin!
 
   def index
-    @fishing_methods = FishingMethod.all #全ての釣法データを取得
+    @fishing_methods = FishingMethod.all.page(params[:page]).per(15) #全ての釣法データを取得
     @new_fishing_method = FishingMethod.new #新規登録用のデータを取得
   end
 
   def create
     fishing_method = FishingMethod.new(fishing_method_params) #送られてきたデータを取得
     fishing_method.save #データを保存
-    redirect_to request.referer #釣法一覧画面に遷移
+    redirect_to request.referer
   end
 
   def destroy
@@ -18,13 +18,6 @@ class Admin::FishingMethodController < ApplicationController
     fishing_method.destroy #データを削除
     redirect_to request.referer #釣法一覧画面に遷移
   end
-
-  def destroy
-    fishing_method = FishingMethod.find(params[:id])
-    fishing_method.destroy
-    redirect_to request.referer
-  end
-
 
   private
 

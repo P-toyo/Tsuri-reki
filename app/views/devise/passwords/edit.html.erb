@@ -1,26 +1,36 @@
-<div class="container mt-5">
-  <h2>パスワード再設定</h2>
-  <div class="row">
-    <div class="col-8">
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
-      <%= f.hidden_field :reset_password_token %>
-      <div class="form-group">
-        <%= f.label :password, "新しいパスワード" %><br />
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %>文字以上に設定してください)</em><br />
-        <% end %>
-        <%= f.password_field :password, autofocus: true, autocomplete: "new-password",  class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password_confirmation, "新しいパスワードの確認" %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password",  class: "form-control" %>
-      </div>
-      <div class="form-group">
-        <%= f.submit "パスワード変更", class:"btn btn-outline-primary" %>
-      </div>
-      <% end %>
-      <%= render "devise/shared/links" %>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">パスワードの再設定</h2>
     </div>
   </div>
-</div>
+</header>
+<!-- パスワード再設定用フォーム -->
+<section class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <!-- 入力フォーム -->
+        <div class="card card-container my-5">
+          <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: "m-5", method: :put }) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+            <%= f.hidden_field :reset_password_token %>
+            <!-- 新しいパスワードの入力部 -->
+            <%= f.label :password, "新しいパスワード(#{@minimum_password_length}文字以上に設定してください)", class: "m-0 text-dark" %><br />
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password",  class: "form-control mb-1" %>
+            <!-- 新しいパスワード確認部 -->
+            <%= f.label :password_confirmation, "新しいパスワードの確認", class: "m-0 text-dark" %><br />
+            <%= f.password_field :password_confirmation, autocomplete: "new-password",  class: "form-control mb-2" %>
+            <!-- パスワード変更ボタン -->
+            <%= f.submit "パスワード変更", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
+            <!-- ログインページへのリンク -->
+            <div><%= link_to "ログインはこちら", new_user_session_path, class: "text-dark" %></div>
+            <!-- 新規会員登録ページへのリンク -->
+            <div><%= link_to "まだ会員登録がお済みで無い方はこちら", new_user_registration_path, class: "text-dark" %></div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

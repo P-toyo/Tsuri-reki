@@ -1,0 +1,33 @@
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">お知らせ追加</h2>
+    </div>
+  </div>
+</header>
+<!-- お知らせ情報入力部 -->
+<section class="bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 mb-5 mb-lg-0">
+        <!-- 入力フォーム -->
+        <div class="card card-container my-5">
+          <%= form_with model: @information, url: admin_information_index_path, class: "new_information m-5" do |f| %>
+            <!-- タイトル入力部 -->
+            <%= f.label :title, "タイトル", class: "m-0 text-dark" %>
+            <%= f.text_field :title, autofocus: true, class: "form-control mb-1" %>
+            <!-- 本文入力部 -->
+            <%= f.label :body, "本文", class: "m-0 text-dark" %>
+            <%= f.text_area :body, class: "form-control mb-1", style: "height: 500px" %>
+            <!-- 画像選択 -->
+            <%= f.label :image, "画像を選択", class: "btn btn-outline-dark mb-4 w-100" %>
+            <%= f.file_field :image, class: "d-none" %>
+            <!-- ログインボタン -->
+            <%= f.submit "お知らせを追加する", class: "btn btn-lg btn-outline-dark btn-block mb-2" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

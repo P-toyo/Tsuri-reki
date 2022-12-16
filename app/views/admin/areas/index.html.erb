@@ -1,23 +1,55 @@
-<div class="col-2"></div>
-
-<div class="col-8">
-  <h4 class="text-center">釣り場一覧・編集</h4>
-  <% @areas.each do |area| %>
-    <%= form_with model: area, url: admin_area_path(area), class: "d-flex align-items-center" do |f| %>
-      <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_blank: "都道府県" %>
-      <%= f.text_field :name, placeholder: "釣り場名" %>
-      <%= f.text_field :longitude, placeholder: "経度" %>
-      <%= f.text_field :latitude, placeholder: "緯度" %>
-      <%= f.submit "編集", class: "btn btn-success btn-sm" %>
-    <% end %>
-    <%= link_to "削除", admin_area_path(area), method: :delete, "data-confirm" => "本当に削除しますか？" %>
-  <% end %>
-  <%= form_with model: @new_area, url: admin_areas_path, class: "d-flex align-items-center", method: :post do |f| %>
-    <%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, include_blank: "都道府県" %>
-    <%= f.text_field :name, placeholder: "釣り場名" %>
-    <%= f.text_field :longitude, placeholder: "経度" %>
-    <%= f.text_field :latitude, placeholder: "緯度" %>
-    <%= f.submit "追加", class: "btn btn-success btn-sm" %>
-  <% end %>
-  <%= link_to "戻る", admin_root_path %>
-</div>
+<!-- ヘッダー -->
+<header class="bg-dark py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="text-center text-white">
+      <h2 class="fw-bolder">釣り場一覧</h2>
+    </div>
+  </div>
+</header>
+<!-- 釣り場の一覧を表示 -->
+<section class="bg-light">
+  <div class="container-fluid px-0">
+    <div class="row">
+      <%= render "admin/homes/sidebar" %>
+      <div class="col-10 px-4">
+        <table class="table mt-3 mb-0">
+          <tr>
+            <th>登録日</th>
+            <th>都道府県</th>
+            <th>名前</th>
+            <th>投稿数</th>
+            <th>経度</th>
+            <th>緯度</th>
+            <th></th>
+          </tr>
+          <% @areas.each do |area| %>
+            <tr>
+              <td><%= area.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= area.prefecture.name %></td>
+              <td><%= area.name %></td>
+              <td><%= area.posts.count %>件</td>
+              <td><%= area.longitude %></td>
+              <td><%= area.latitude %></td>
+              <td><%= link_to "削除", admin_area_path(area), method: :delete, class: "btn btn-outline-danger", "data-confirm" => "本当に削除しますか？" %></td>
+            </tr>
+          <% end %>
+          <%= form_with model: @new_area, url: admin_areas_path, class: "d-flex align-items-center", method: :post do |f| %>
+          <tr>
+            <td>新規登録</td>
+            <td><%= f.collection_select :prefecture_id, Prefecture.all, :id, :name, { prompt: '都道府県' }, class: "form-control mb-3" %></td>
+            <td><%= f.text_field :name, class: "form-control", placeholder: "釣り場名" %></td>
+            <td></td>
+            <td><%= f.text_field :longitude, class: "form-control", placeholder: "経度" %></td>
+            <td><%= f.text_field :latitude, class: "form-control", placeholder: "緯度" %></td>
+            <td><%= f.submit "追加", class: "btn btn-outline-success" %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <!-- ページネーションのページ選択 -->
+      <div class="text-center mx-auto mb-2"><%= paginate @areas %></div>
+    </div>
+  </div>
+</section>

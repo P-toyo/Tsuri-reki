@@ -13,29 +13,33 @@ class Public::PostsController < ApplicationController
 
   def create
     #ストロングパラメータ
-    post = Post.new(post_params)
+    @post = Post.new(post_params)
     #Cloud Natural Language APIにコメントを渡し、返り値(分析値)を保存
-    post.score = Language.get_data(post_params[:comment])
+    @post.score = Language.get_data(post_params[:comment])
     #投稿にユーザーIDを紐付け
-    post.user_id = current_user.id
-    #釣行場所を登録
-    post.prefecture_id = post.area.prefecture.id
+    @post.user_id = current_user.id
     #投稿を保存
-    post.save!
-    #都道府県検索用タグの付与
-    post_tag = PostTag.new
-    #タグ用のテーブルに投稿の釣行場所を登録
-    post_tag.prefecture_id = post.prefecture_id
-    #タグ用のテーブルに投稿IDを登録
-    post_tag.post_id = post.id
-    #タグを保存
-    post_tag.save!
-    #Cloud Vision APIに投稿画像を渡し、返り値よりタグを作成
-    tags = Vision.get_image_data(post.image[0])
-    tags.each do |tag|
-      post.image_tags.create(name: tag)
+    if @post.save
+      #都道府県検索用タグの付与
+      post_tag = PostTag.new
+      #タグ用のテーブルに投稿の釣行場所を登録
+      post_tag.prefecture_id = @post.prefecture_id
+      #タグ用のテーブルに投稿IDを登録
+      post_tag.post_id = @post.id
+      #タグを保存
+      post_tag.save
+      if @post.image[0].present?
+      #Cloud Vision APIに投稿画像を渡し、返り値よりタグを作成
+        tags = Vision.get_image_data(@post.image[0])
+        tags.each do |tag|
+          @post.image_tags.create(name: tag)
+        end
+      end
+      redirect_to post_path(@post.id)
+    else
+      @prefecture_id = @post.prefecture_id
+      render action: :new
     end
-    redirect_to post_path(post.id)
   end
 
   def show

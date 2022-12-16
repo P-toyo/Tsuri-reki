@@ -1,5 +1,7 @@
 class Area < ApplicationRecord
 
+  validates :prefecture_id, :name, :longitude, :latitude, presence: true
+
   belongs_to :prefecture
   has_many   :posts
   has_many   :area_ratings

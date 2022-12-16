@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PostedImageTest < ActiveSupport::TestCase
+class Admin::CommentsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
