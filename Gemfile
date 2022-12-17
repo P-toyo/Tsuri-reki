@@ -80,3 +80,5 @@ gem 'kaminari'
 gem 'figaro'
 
 gem 'groupdate'
+
+gem 'rails-i18n', '~> 6.0.0'

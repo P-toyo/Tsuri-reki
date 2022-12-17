@@ -1,0 +1,4 @@
+<% flash.each do |key, value| %>
+  <%= content_tag(:div, value, class: "#{key} col-12 text-center p-0 m-0") %>
+<% end %>
+<% flash.clear %>
