@@ -37,7 +37,7 @@ class Public::PostsController < ApplicationController
       end
       redirect_to post_path(@post.id)
     else
-      flash[:alert] = "全て入力してください"
+      flash[:alert] = "その他釣果、コメント以外全て入力してください"
       @prefecture_id = @post.prefecture_id
       render action: :new
     end
