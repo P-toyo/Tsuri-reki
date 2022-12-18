@@ -6,6 +6,14 @@
     </div>
   </div>
 </header>
+<!-- アラートを表示する -->
+<section>
+  <div class="container-fluid m-0 p-0">
+    <div class="row">
+      <%= render "layouts/notifications" %>
+    </div>
+  </div>
+</section>
 <!-- 釣り場情報を表示する部分 -->
 <section>
   <div class="col-lg-8 offset-lg-2 my-3">
@@ -87,7 +95,7 @@
 <!-- 釣り場の釣果をグラフにして表示する部分 -->
 <section>
   <div class="row p-3">
-    <div class="col-12">
+    <div class="col-12 col-lg-8 offset-lg-2">
       <!-- グラフを表示 -->
       <%= render "public/areas/chart", {species_name: @species_name, catch_number: @catch_number} %>
     </div>
