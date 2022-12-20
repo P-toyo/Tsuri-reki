@@ -19,15 +19,9 @@
 - 釣果を記録する時
 - 自分の仕掛けや釣果を投稿する時
 
-## 設計書
-- テーマが確定後、ER図やテーブル定義書、詳細設計を作成した場合は閲覧可能なURLを追記。
-
 ## 開発環境
 - OS：Linux(CentOS)
 - 言語：HTML,CSS,JavaScript,Ruby,SQL
 - フレームワーク：Ruby on Rails,Bootstrap
 - JSライブラリ：jQuery
 - IDE：Cloud9
-
-## 使用素材
-- 使用検討中です
