@@ -96,8 +96,12 @@
 <section>
   <div class="row p-3">
     <div class="col-12 col-lg-8 offset-lg-2">
-      <!-- グラフを表示 -->
-      <%= render "public/areas/chart", {species_name: @species_name, catch_number: @catch_number} %>
+      <!-- 釣果がある場合はグラフを表示 -->
+      <% if @catch_number.present? %>
+        <%= render "public/areas/chart", {species_name: @species_name, catch_number: @catch_number} %>
+      <% else %>
+        <div class="text-center h4">グラフに表示できるデータはありません</div>
+      <% end %>
     </div>
   </div>
 </section>
