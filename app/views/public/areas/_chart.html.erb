@@ -7,7 +7,6 @@ var myChart = new Chart(ctx, {
   data: {
     labels: <%= raw(species_name) %>,
     datasets: [{
-      yAxisID: 'yaxes_1',
       label: 'このエリアの釣果',
       data: <%= raw(catch_number) %>,
       borderWidth: 1
@@ -15,8 +14,9 @@ var myChart = new Chart(ctx, {
   },
 
   options: {
-    scales: {
-      "yaxes_1": {
+    scale: {
+      ticks: {
+        precision: 0
       }
     }
   }
