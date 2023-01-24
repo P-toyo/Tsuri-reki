@@ -15,7 +15,7 @@ class Public::PostsController < ApplicationController
     #ストロングパラメータ
     @post = Post.new(post_params)
     #Cloud Natural Language APIにコメントを渡し、返り値(分析値)を保存
-    @post.score = Language.get_data(post_params[:comment])
+    #@post.score = Language.get_data(post_params[:comment])
     #投稿にユーザーIDを紐付け
     @post.user_id = current_user.id
     #投稿を保存
